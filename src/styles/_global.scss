@@ -16,7 +16,7 @@
   --anchor-color: #4183c4;
   --footer-color: #444;
   --blockquote-color: #444;
-  --font-size: 18px;
+  --font-size: 17px;
   --max-width: 900px;
   --global-padding-top: 45px;
   --global-padding-left: 45px;
@@ -50,8 +50,12 @@ body.dark-mode {
   body {
     --global-padding-top: 32px;
     --global-padding-left: 20px;
+    --font-size: 15px;
     .footer .line {
-      min-width: 24%;
+      min-width: 2%;
+    }
+    .index > ul > li {
+      margin-bottom: 30px;
     }
   }
 }
