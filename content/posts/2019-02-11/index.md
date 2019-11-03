@@ -6,7 +6,7 @@ draft: false
 tags:
   - git
   - sourcetree
-excerpt: 'A super useful git feature that I just learnt ⛳️'
+excerpt: 'A super useful git feature that I just learnt ⛳️.'
 ---
 
 A few days back I was working on a feature ⛳️ and I realized that I commit too often in git 😟. I don't know if it's bad or not but

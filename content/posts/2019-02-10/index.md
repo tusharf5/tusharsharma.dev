@@ -3,7 +3,7 @@ title: 'Javascript Promises are Eager and Not Lazy'
 category: 'Javascript'
 uid: 'js-promises-eager-not-lazy'
 draft: false
-excerpt: 'A nice little gotcha related to how promises work in Javascript'
+excerpt: 'A nice little gotcha related to how promises work in Javascript.'
 tags:
   - javascript
   - snippets

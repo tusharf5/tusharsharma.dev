@@ -8,7 +8,7 @@ tags:
   - bash
   - bash_profile
   - bashrc
-excerpt: "A handful of gotchas that I've learned over the years working with command shells 🐚 on a regular basis"
+excerpt: "A handful of gotchas that I've learned over the years working with command shells 🐚 on a regular basis."
 ---
 
 I'm no command line expert but I use it daily. For almost a year and a half

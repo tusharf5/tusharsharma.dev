@@ -7,12 +7,12 @@ tags:
   - node design pattern
   - reactor pattern
   - design pattern
-excerpt: 'You do not need npm packages for everything'
+excerpt: "In this blog we'll take a look at a pattern which is used all over the node core."
 ---
 
 In traditional I/O blocking programming, each concurrent connection is handled by kicking off a new process or a thread in the CPU. So that even if a thread is blocked by some I/O operation. It doesn't block other connections(threads).
 
-<p style="text-align:center;"><img alt="Traditional Thread Pattern" src="https://static.packt-cdn.com/products/9781783287314/graphics/7314OS_01_01.jpg" /></p>
+<p style="text-align:center;"><img style="width: 100%;" alt="Traditional Thread Pattern" src="https://static.packt-cdn.com/products/9781783287314/graphics/7314OS_01_01.jpg" /></p>
 
 Thread is expensive. The longer a thread lives, the longer the CPU has to perform context switching which wastes cpu time and memory.
 
@@ -82,6 +82,6 @@ In the above image
 
 Each Operating System has a different interface for Event Demultiplexer and also even in the same OS different types of I/O behaves differently (File I/O in Unix is blocking in nature. So it needs a separate thread). All these inconsistecies across various platforms is handled by a library called **libuv**. **It exposes a common interface to interact with the Event Demultiplexer of major OS. It also implements the Reactor Pattern. It Manages the Event Queue, etc.**
 
-<p style="text-align:center;"><img alt="Node Reactor Pattern" src="https://static.packt-cdn.com/products/9781783287314/graphics/7314OS_01_02.jpg" /></p>
+<p style="text-align:center;"><img style="width: 100%;" alt="Node Reactor Pattern" src="https://static.packt-cdn.com/products/9781783287314/graphics/7314OS_01_02.jpg" /></p>
 
 Using this pattern, Node.js can handle approx. 10,000 HTTP connections at the same time. Instead of creating a thread for each request, Node assigns a callback to each request. A Callback is way too cheaper when compared with a Thread.

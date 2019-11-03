@@ -8,7 +8,7 @@ tags:
   - functions
   - inheritance
   - new keyword
-excerpt: 'How prototyping works in Javascript with the prototype chain?'
+excerpt: 'How prototyping works in Javascript with the prototype chain?.'
 ---
 
 Let's try to understand what happens behind the scenes when you create a new function and when you extend one.

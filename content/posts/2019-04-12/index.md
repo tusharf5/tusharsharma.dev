@@ -3,11 +3,11 @@ title: 'XOR - A Powerful Lodash Method'
 category: 'Javascript'
 uid: 'xor-lodash'
 draft: false
-excerpt: Get toggle functionality out of the box with lodash's xor method
 tags:
   - xor
   - xorBy
   - javascript arrays
+excerpt: "Get toggle functionality out of the box with lodash's xor method."
 ---
 
 Often times I find myself implementing toggle functionality in applications.

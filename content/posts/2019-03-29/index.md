@@ -8,7 +8,7 @@ tags:
   - database
   - MongoDB
   - mongoose
-excerpt: 'I find querying and updating nested arrays in MongoDB documents the most tricky operations'
+excerpt: 'I find querying and updating nested arrays in MongoDB documents the most tricky operations.'
 ---
 
 ![Querying and Updating Nested Arrays in MongoDB](./mongo.png)

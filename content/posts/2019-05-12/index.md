@@ -7,7 +7,7 @@ tags:
   - git
   - git workflow
   - rebase
-excerpt: 'The better you know your tools, the more productive you become'
+excerpt: 'The better you know your tools, the more productive you become.'
 ---
 
 ![Advanced Git](./hero.jpg)

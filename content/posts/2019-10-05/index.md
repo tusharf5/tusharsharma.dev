@@ -7,7 +7,7 @@ tags:
   - js promises
   - retry
   - design pattern
-excerpt: 'You do not need npm packages for everything'
+excerpt: 'We can use promises and sprinkle some recursion on top of it to create auto retry function pattern.'
 ---
 
 For the past 2 years, I've worked extensively with B2B services which include both using and for the most part

@@ -6,7 +6,7 @@ draft: false
 tags:
   - javascript
   - python
-excerpt: 'Generators are super cool and super helpful in some cases. But How?'
+excerpt: 'Generators are super cool and super helpful in some cases. But How?.'
 ---
 
 Generators were introduced in javascript with the ES6 version. But I never really found

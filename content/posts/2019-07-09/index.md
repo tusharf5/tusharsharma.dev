@@ -5,7 +5,7 @@ category: 'Programming'
 draft: false
 tags:
   - encodings
-excerpt: 'The bare minimum of Text Encodings and Schemes without going too much into details'
+excerpt: 'The bare minimum of Text Encodings and Schemes without going too much into details.'
 ---
 
 ![Text Encodings - What Every Software Engineer Should Know](./encoding.jpg)

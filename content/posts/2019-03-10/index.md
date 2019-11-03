@@ -3,7 +3,7 @@ title: 'ES10 Flatmap for Mapping and Filtering'
 category: 'Javascript'
 uid: 'es10-flatmap-for-mapping-and-filtering'
 draft: false
-excerpt: "That's one ES10 feature which I think I will use frequently moving on"
+excerpt: "That's one ES10 feature which I think I will use frequently moving on."
 tags:
   - javascript
   - snippets

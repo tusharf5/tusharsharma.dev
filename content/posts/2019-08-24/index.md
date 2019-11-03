@@ -8,7 +8,7 @@ tags:
   - public key encryption
   - symmetric encryption
   - asymmetric encryption
-excerpt: 'SSH makes accessing remote servers super easy and secure. But how it does that is the real interesting part'
+excerpt: 'SSH makes accessing remote servers super easy and secure. But how it does that is the real interesting part.'
 ---
 
 ![SSH Internals and How It Works](./ssh.png)
