@@ -1,0 +1,40 @@
+.footer {
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: var(--max-width);
+  padding: var(--global-padding-top) var(--global-padding-left);
+  padding-top: 0;
+  color: var(--footer-color);
+  display: flex;
+  align-items: center;
+
+  .line {
+    background-color: var(--footer-color);
+    min-width: 60%;
+    height: 1px;
+    margin-right: 8px;
+    opacity: 0.2;
+  }
+  span {
+    text-transform: uppercase;
+    margin-right: 8px;
+    font-size: 0.8em;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+    padding: 0 10px;
+    > div {
+      float: right;
+      margin-right: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

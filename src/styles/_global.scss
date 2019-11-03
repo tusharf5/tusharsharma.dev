@@ -1,0 +1,102 @@
+:root {
+  --body-bg: #fff;
+  --color: #24292e;
+  --heading-color: #142331;
+  --h1-dash-color: #afec9e;
+  --h2-left-border: #cce5ff;
+  --sub-head-before: #9ed0ff;
+  --h6-color: #777;
+  --hr-color: #e1e4e8;
+  --blockquote-color: #e5e8e8;
+  --table-bg: #fafbfc;
+  --table-border: #dadfe6;
+  --code-bg: #e2f0ff;
+  --code-line-highlight: #f0f2f9;
+  --pre-bg: #f6f8fa;
+  --anchor-color: #4183c4;
+  --footer-color: #444;
+  --blockquote-color: #444;
+  --font-size: 18px;
+  --max-width: 900px;
+  --global-padding-top: 45px;
+  --global-padding-left: 45px;
+  --font-family: 'SF UI Text', -apple-system, -apple-system-body,
+    BlinkMacSystemFont, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+  --code-font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier,
+    monospace, 'PingFang SC', 'Microsoft YaHei';
+}
+
+body.dark-mode {
+  --body-bg: #2b2b2b;
+  --color: #a9b7c6;
+  --heading-color: #b8c8d9;
+  --h1-dash-color: #5f8055;
+  --h2-left-border: #3d5266;
+  --sub-head-before: #4d6580;
+  --h6-color: #93a0ad;
+  --hr-color: #3a3c3d;
+  --footer-color: #a9b7c6;
+  --blockquote-color: #8b97a3;
+  --table-bg: #32373d;
+  --table-border: #53575c;
+  --code-bg: #32373d;
+  --code-line-highlight: #2b2b2b;
+  --pre-bg: #f6f8fa;
+  --anchor-color: #6dadf2;
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    --global-padding-top: 32px;
+    --global-padding-left: 20px;
+    .footer .line {
+      min-width: 24%;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color);
+  line-height: 1.6;
+  font-weight: 300;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--body-bg);
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  font-family: inherit;
+}
+
+a {
+  color: var(--anchor-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: text;
+  color: var(--heading-color);
+}
