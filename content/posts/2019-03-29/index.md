@@ -1,24 +1,23 @@
 ---
-title: 'Array Operations and Gotchas in MongoDB'
+title: 'MongoDB - Update And Query Operators for Arrays'
 category: 'MongoDB'
-uid: 'array-operations-and-gotchas-in-mongo-db'
+uid: 'mongo-db-update-and-query-operators-for-arrays'
 draft: false
 tags:
   - positional operator
   - database
   - MongoDB
   - mongoose
-excerpt: 'I find querying and updating nested arrays in MongoDB documents the most tricky operations.'
+excerpt: 'Querying and updating arrays in mongoDb can be tricky. mongoDB has a rich set of very useful array operators. Since arrays play an important role when designing the database schema, in this post I will explain how to and when to use array operators in mongoDB with examples.'
 ---
 
 ![Querying and Updating Nested Arrays in MongoDB](./mongo.png)
 
-I love and prefer working with NoSQL databases and MongoDB happens to be my favourite. This weekend I decided to
-write about updating array type of fields in MongoDB documents.
+I've worked with mongoDB for 3 years now. Built several monoliths, microservices, serverless applications with different use cases using mongoDB. It is fast, scalable, dynamic and developer friendly. One of my favourite **mongoDB** feature is that it stores data as documents in BSON (JSON in binary) because of which we can store array fields inside a document unlike a SQL based database where we would have to create another table for it.
 
 Let's suppose we have the following data in our MongoDB **posts** collection stored in a very naive way (for simplicity).
-Each `post` document has a **title**, **author** and a **comments** array field. Each element of the `comments` array
-represents a user with some basic information like **country**, **name**, **isGuest**, and **country**.
+Each **post** document has a `title`, `author` and a `comments` array field. Each element of the `comments` array
+represents a user with some basic information like `country`, `name`, `isGuest`, and `country`.
 
 ```js
 [
@@ -191,7 +190,7 @@ If we translate this MongoDB query statement to English. It will be
 
 This will be the returned result.
 
-```js {7,20,31,32}
+```js {9,58,93,100}
 [
   {
     _id: ObjectId('1233'),
@@ -322,7 +321,7 @@ Looks good but this will return us all of the posts where **at least one** comme
 
 This is the result of the above query.
 
-```js {7,19,21,31}
+```js {11,12,95,96}
 [
   {
     _id: ObjectId('1232'),
@@ -478,7 +477,7 @@ db.posts.find({
 
 The result from the above query is.
 
-```js {7,19}
+```js {11,12,53,54}
 [
   {
     _id: ObjectId('1232'),
@@ -685,7 +684,7 @@ This command looks pretty good. Update the **isGuest** field to false in all the
 
 The `isGuest` field of all the _highlighted_ lines in the document below was set to false by the above command.
 
-```js {19-23,31-35,43-44}
+```js {53,60,67,74,81,95,102,109,116,123,137,144}
 [
   {
     _id: ObjectId('1232'),
@@ -935,4 +934,77 @@ db.posts.update(
 Here we are specifying the criteria to tell MongoDB when to update an element whose `name` field
 is equal to `John` where _e_ represents the element.
 
-I wanted to write more but It's 3 a.m and I should sleep now 🤪
+### \$all operator
+
+Let's take an example of a customers collection where we can tag each customer. In a typical dashboard we could expect
+the filter criterias to be like "Show only important", "Show only business", "Show only repeat and important", etc.
+
+```json
+[
+  {
+    "_id": "123456abcd",
+    "tags": ["important", "business", "new"]
+  },
+  {
+    "_id": "123457abce",
+    "tags": ["spam", "new"]
+  },
+  {
+    "_id": "123458abcf",
+    "tags": ["important", "repeat", "normal"]
+  },
+  {
+    "_id": "123459abcg",
+    "tags": ["spam", "repeat"]
+  }
+]
+```
+
+```shell
+# Find customers where each customer has ATLEAST one of the tag as important
+db.customers.find({ tags: 'important' })
+# Result - ['123456abcd', '123458abcf']
+
+# Find customers where each customer has ATLEAST one of the tag as business
+db.customers.find({ tags: 'business' })
+# Result - ['123456abcd]
+
+# Find customers where each customer has EXACTLY these two tags i,e business and important
+db.customers.find({ tags: ['business', 'important'] })
+# Result - []
+
+# Find customers where each customer has EXACTLY these two tags i,e spam and new
+db.customers.find({ tags: [ "spam", "new" ] })
+# Result - ['123457abce']
+
+# Find customers where each customer has either a business tag OR an important tag
+db.customers.find({ tags: { $in: ['business', 'important'] } })
+# Result - ['123456abcd', '123458abcf']
+
+# Find customers where each customer has(includes) an important tag AND a repeat tag
+db.customers.find({ tags: { $all: ['important', 'repeat'] } })
+# Result - ['123458abcf']
+```
+
+**\$all** tag is useful where we want to only find documents which includes _all the tags specified in the filter_.
+I'll give another example just to make it more clear. Let's say we are building a dashboard where we could search users
+based on the the singers they listen to and we could connect with the users who have similar song interests as we do.
+We could do a search with the filters applied as "Eminem, Owl City". Now if we use the **\$in** operator we would get a list
+of users which either listens to "Eminem" or "Owl City". They wouldn't listen to **BOTH** of the singers in the filter.
+But if we use the **\$all** operator, we would get a list of all the users that listens to **BOTH** the singers in the filter.
+
+$all operator is similar to $elemMatch operator but on array of strings or numbers, whereas, \$elemMatch only works on array of sub documents.
+
+```shell
+# Find users where each user EITHER listens to eminem OR owl city
+db.users.find({ tags: { $in: ['eminem', 'owlCity'] } })
+
+# Find users where each user listens to BOTH eminem AND owl city
+db.users.find({ tags: { $all: ['eminem', 'owlCity'] } })
+```
+
+> Make sure your array field is indexed, otherwise array operations could take up a lot of time and put load on your Database.
+
+Check [this](https://docs.mongodb.com/manual/reference/operator/query/all/#use-all-with-elemmatch) link for a more complex use of the \$all operator.
+
+Happy Coding 🎉
