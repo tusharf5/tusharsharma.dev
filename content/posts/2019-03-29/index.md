@@ -1,24 +1,23 @@
 ---
-title: 'Array Operations and Gotchas in MongoDB'
+title: 'MongoDB - Update And Query Operators for Arrays'
 category: 'MongoDB'
-uid: 'array-operations-and-gotchas-in-mongo-db'
+uid: 'mongo-db-update-and-query-operators-for-arrays'
 draft: false
 tags:
   - positional operator
   - database
   - MongoDB
   - mongoose
-excerpt: 'I find querying and updating nested arrays in MongoDB documents the most tricky operations.'
+excerpt: 'Querying and updating arrays in mongoDb can be tricky. mongoDB has a rich set of very useful array operators. Since arrays play an important role when designing the database schema, in this post I will explain how to and when to use array operators in mongoDB with examples.'
 ---
 
 ![Querying and Updating Nested Arrays in MongoDB](./mongo.png)
 
-I love and prefer working with NoSQL databases and MongoDB happens to be my favourite. This weekend I decided to
-write about updating array type of fields in MongoDB documents.
+I've worked with mongoDB for 3 years now. Built several monoliths, microservices, serverless applications with different use cases using mongoDB. It is fast, scalable, dynamic and developer friendly. One of my favourite **mongoDB** feature is that it stores data as documents in BSON (JSON in binary) because of which we can store array fields inside a document unlike a SQL based database where we would have to create another table for it.
 
 Let's suppose we have the following data in our MongoDB **posts** collection stored in a very naive way (for simplicity).
-Each `post` document has a **title**, **author** and a **comments** array field. Each element of the `comments` array
-represents a user with some basic information like **country**, **name**, **isGuest**, and **country**.
+Each **post** document has a `title`, `author` and a `comments` array field. Each element of the `comments` array
+represents a user with some basic information like `country`, `name`, `isGuest`, and `country`.
 
 ```js
 [
@@ -191,7 +190,7 @@ If we translate this MongoDB query statement to English. It will be
 
 This will be the returned result.
 
-```js {7,20,31,32}
+```js {9,58,93,100}
 [
   {
     _id: ObjectId('1233'),
@@ -322,7 +321,7 @@ Looks good but this will return us all of the posts where **at least one** comme
 
 This is the result of the above query.
 
-```js {7,19,21,31}
+```js {11,12,95,96}
 [
   {
     _id: ObjectId('1232'),
@@ -478,7 +477,7 @@ db.posts.find({
 
 The result from the above query is.
 
-```js {7,19}
+```js {11,12,53,54}
 [
   {
     _id: ObjectId('1232'),
@@ -685,7 +684,7 @@ This command looks pretty good. Update the **isGuest** field to false in all the
 
 The `isGuest` field of all the _highlighted_ lines in the document below was set to false by the above command.
 
-```js {19-23,31-35,43-44}
+```js {53,60,67,74,81,95,102,109,116,123,137,144}
 [
   {
     _id: ObjectId('1232'),
