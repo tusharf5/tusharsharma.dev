@@ -58,7 +58,7 @@ The UI, in this case, could appear janky and unresponsive at times if the applic
 
 With the new fiber architecture, instead of using a Stack to do a recursive traversal React uses a new data structure called **Fiber**. It also makes use of while loops instead of recursion for performance reasons and another reason that I will discuss later in this post. In Fiber, React computes(updates/build) a part of our component tree, comes to check if there are any pending tasks (browser events, paints, timers, api calls, etc ) to do, if not then go back and continue computing the tree where it left off. See the image below.
 
-![React Fiber Architecture - A Deep Dive](./stack-code-exec-timeline.png)
+![React Fiber Architecture - A Deep Dive](./fiber-code-exec-timeline.png)
 
 So if React Stack takes **48ms** (approx. 3 frame drops) to do a task in one run. React Fiber would complete the same task in 3 runs of approx. **16ms** each thereby not dropping any frames. But how does React Fiber knows when to pause a task, how to pause a task and when to come back? Well, the answer lies in the Fiber architecture.
 

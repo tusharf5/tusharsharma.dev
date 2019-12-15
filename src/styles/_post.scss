@@ -302,6 +302,10 @@
       display: block;
     }
 
+    img {
+      max-width: 100%;
+    }
+
     img > .md-meta {
       border: 1px solid #ddd;
       border-radius: 3px;
