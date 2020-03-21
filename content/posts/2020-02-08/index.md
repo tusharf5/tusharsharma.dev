@@ -6,7 +6,7 @@ draft: false
 tags:
   - css
   - composability
-excerpt: 'We are so much focused on improving infrastructure of servers and applications that we miss out on talking about maintaining CSS which is one of the most important aspect of an application. In thin post, I walk you through two patterns to write better CSS.'
+excerpt: 'We are so much focused on improving infrastructure of servers and applications that we miss out on talking about maintaining CSS which is one of the most important aspect of an application. In this post, I walk you through two patterns to write better CSS.'
 ---
 
 In a typical HTML project you would find multiple CSS files. One file could be for resetting the browser's default stylings, one for the globally applied CSS, page-specific CSS, component-specific CSS, behavior-specific CSS, context-specific CSS, and many more types.
