@@ -232,4 +232,4 @@ Note that the above file only has **cosmetic** CSS and not positional. All the f
 
 This brings us back to the title of this post **Composability** which means writing css that is easier to extend. By following the above two patterns we can ensure the CSS we write is **composable**.
 
-Thanks for reading, you can go home now.
+Thanks for reading.
