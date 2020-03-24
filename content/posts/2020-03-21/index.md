@@ -1,7 +1,7 @@
 ---
-uid: "aws-ecs-overview"
-title: "AWS Elastic Container Service - An Overview"
-category: "AWS"
+uid: 'aws-ecs-overview'
+title: 'AWS Elastic Container Service - An Overview'
+category: 'AWS'
 draft: false
 tags:
   - aws
@@ -9,12 +9,10 @@ tags:
   - microservices
   - load balancers
   - target group
-excerpt: "Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service. A lot of enterprise software companies use ECS to run their most sensitive and mission critical applications because of its security, reliability, and scalability."
+excerpt: 'Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service. A lot of enterprise software companies use ECS to run their most sensitive and mission critical applications because of its security, reliability, and scalability.'
 ---
 
-We recently migrated our cloud infrastructure from having one big monolith application server to having multiple different microservices. I think if I have to describe the whole experience it would be that "It's easy to talk about microservices and all the benefits you get from it but the switch is not that easy and if it seems easy, you're probably doing it the wrong way."
-
-Choosing the right cloud framework for your application is the single most important decision in that path. **Dockerization** is the way to go for microservices and there are some big players in the market to manage your Docker containers like [Kubernetes](https://kubernetes.io/), [Google Cloud Engine](https://cloud.google.com/container-options), [AWS](https://aws.amazon.com/containers/), [Microsoft Azure](https://azure.microsoft.com/en-in/product-categories/containers/), etc. At Gerald, we decided to go with AWS as we were already using AWS and so we had a strong understanding of different concepts in the AWS world.
+We recently migrated our cloud infrastructure from having one big monolith application server to having multiple different microservices and I think choosing the right cloud provider for your application is the single most important decision in that path. **Dockerization** is the way to go for microservices and there are some big players in the market to manage your Docker containers like [Kubernetes](https://kubernetes.io/), [Google Cloud Engine](https://cloud.google.com/container-options), [AWS](https://aws.amazon.com/containers/), [Microsoft Azure](https://azure.microsoft.com/en-in/product-categories/containers/), etc. At Gerald, we decided to go with AWS as we were already using AWS and so we had a strong understanding of different concepts in the AWS world.
 
 The purpose of this blog series is to lay out a path for designing a cloud-native application architecture using AWS ECS service which would cover a lot about different components of the service itself. I won't be going into too many details as the AWS documentation does a good job doing that.
 
@@ -106,7 +104,9 @@ ECS will quickly determine that in our service configuration we specified that a
 
 This is how ECS will make sure our application is available all the time even after a failure.
 
-If you're still here I hope now you have a slightly better understanding of how ECS works which will make it easy to go through AWS Docs from here. There are still a lot of concepts left and I will cover them in the next part of this series which will include the following articles.
+> I think It's easier to define the term microservices and the benefits you get from using that architecture but the switch from a monolithic application to microservices is not that straight forward. You must have a deep understanding of the application from a business as well as the technical side to be able to plan your microservices architecture ahead of the implemenntation.
+
+If you're still reading then I hope now you have a slightly better understanding of how ECS works which will make it easy to go through AWS Docs from here. There are still a lot of concepts left and I will cover them in the next part of this series which will include the following articles.
 
 1. An Overview (this one)
 2. AutoScaling
