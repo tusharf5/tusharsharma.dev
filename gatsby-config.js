@@ -1,11 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: 'Tushar Sharma | Full Stack Engineer',
+    title: 'Tushar Sharma',
     siteUrl: 'https://tusharsharma.dev',
     description:
-      'Full Stack Software Engineer and a Mentor. Passionate about web technologies and javascript',
+      'Director of Engineering @Gerald. Passionate about web technologies and cloud security',
     author: 'Tushar Sharma',
     keywords: [
+      'Director of Engineering',
       'Software Development',
       'Web Development',
       'JavaScript',
