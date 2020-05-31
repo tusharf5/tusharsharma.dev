@@ -205,7 +205,7 @@ One caveat with using this approach is that once an exported value is used (impo
 
 ## Divide your Stacks into Units
 
-Now I've learned this lesson from a real-life scenario where I created a **2500+** lines of CFN template. Although it was properly organized but it still became a bottleneck for us to make changes to it.
+Now I've learned this lesson from a real-life experience where I created a **2500+** lines of CFN template. Although it was properly organized but it still became a bottleneck for us to make changes to it.
 
 In general, your Stack should be like a unit of similar resources that all achieve one primary goal. For instance, a typical web architecture includes a database, API server, frontend server.
 
