@@ -221,7 +221,7 @@ This way you would be able to make targeted changes to the infrastructure which 
 ## CloudFormation is AWS
 
 Majority of the things that I've learned about different AWS services is through CloudFormation docs. A lot of **[Important]** things which you might miss while using the Console have to
-be explicitly specified when using CFN Templates which provides a wholesome picture of that AWS service. You should read about all the attributes in the docs when defining a resource. It will help you gain a more in-depth understanding of how the service works under the hood.
+be explicitly specified when using CFN Templates which provides a holistic view of that AWS service. You should read about all the attributes in the docs when defining a resource. It will help you gain an in-depth understanding of how the service works under the hood.
 
 ## Conclusion
 
