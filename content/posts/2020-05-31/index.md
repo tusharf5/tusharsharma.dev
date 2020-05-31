@@ -1,6 +1,6 @@
 ---
 uid: 'better-cfn-templates'
-title: 'Write Better Cloudformation Templates'
+title: 'Write Better CloudFormation Templates'
 category: 'AWS'
 draft: false
 tags:
@@ -9,12 +9,12 @@ tags:
   - cloudformation
   - cfn
   - stacks
-excerpt: 'Some good practices that me and my team follows while working with Cloudformation. These practices have helped us to write better cloudformation templates and deploy more often with extra confidence. Let's start 🏁'
+excerpt: 'Some good practices that should be followed while working with CloudFormation. These practices have helped us to write better CloudFormation templates and deploy more often with extra confidence.'
 ---
 
-At [Gerald](https://gerald.app) we heavily use **Cloudformation** to deploy our cloud infrastructure. Our backend architecture is fairly complex with a lot of moving parts. From API servers to Big Data Engines and Data Science components, everything is deployed using cloudformation which integrates seamlessly with our CI/CD pipelines. The benefits of using cloudformation which is an Infrastructure as a Code service provided by AWS is huge.
+At [Gerald](https://gerald.app) we heavily use **CloudFormation** to deploy our cloud infrastructure. Our backend architecture is fairly complex with a lot of moving parts. From API servers to Big Data Engines and Data Science components, everything is deployed using cloudformation which integrates seamlessly with our CI/CD pipelines. The benefits of using cloudformation which is an Infrastructure as a Code service provided by AWS is huge.
 
-A few things that I love about using Cloudformation.
+A few things that I love about using CloudFormation.
 
 - Track your Infrastructure via **version control** since CFN templates are just `.yaml` or `.json` files.
 
@@ -22,9 +22,9 @@ A few things that I love about using Cloudformation.
 
 - Easily integrates with CI/CD tools and pipelines ❤️.
 
-![Write Better Cloudformation Templates](https://softcrylic.com/wp-content/uploads/2019/06/aws-cloud-formation-template-fi.jpg)
+![Write Better CloudFormation Templates](https://softcrylic.com/wp-content/uploads/2019/06/aws-cloud-formation-template-fi.jpg)
 
-I want to write a few good practices that me and my team follows while working with Cloudformation. These practices have helped us to write better cloudformation templates and deploy more often with extra confidence. Let's start 🏁
+I want to write a few good practices that me and my team follows while working with CloudFormation. These practices have helped us to write better cloudformation templates and deploy more often with extra confidence. Let's start 🏁
 
 ## Don't provide a Resource Name
 
@@ -32,8 +32,8 @@ I want to write a few good practices that me and my team follows while working w
 
 ```yaml
 Resources:
-	APIDockerRepository:
-	  Type: AWS::ECR::Repository
+  APIDockerRepository:
+    Type: AWS::ECR::Repository
     Properties: 
       RepositoryName: "api-repository"
       SomeOtherAttribute: "value"
@@ -53,9 +53,9 @@ There are workarounds to this problem (delete first, create after) but a better 
 
 ```yaml
 Resources:
-	APIDockerRepository:
-	  Type: AWS::ECR::Repository
-    Properties: 
+  APIDockerRepository:
+    Type: AWS::ECR::Repository
+    Properties:
       SomeOtherAttribute: "value"
 ```
 
@@ -67,9 +67,9 @@ I can't emphasize how important it is to comment every resource, parameter, attr
 
 I also make sure to add references in the comments to the official docs as well as statements that describe what was the reason behind adding an attribute or its value. It has helped me more than anyone else especially when I go back to view a template that I created a while ago. I don't have to re-think the reasoning as I can read it in the comments.
 
-## 3. Don't Hard Code Stuff
+## 3. Don't Hard-Code
 
-Hard coding stuff is bad. Especially when you are creating resources in the cloud. Your infrastructure should be flexible enough to change as per the architecture. I'll list some typical things that I've seen are commonly hardcoded in CFN Templates.
+Hard-Coding is bad. Especially when you are creating resources in the cloud. Your infrastructure should be flexible enough to change as per the architecture. I'll list some typical things that I've seen are commonly hardcoded in CFN Templates.
 
 - RAM/Compute/Disk Sizes...
 - S3 Bucket Names
@@ -182,7 +182,7 @@ Parameters:
     AllowedValues:
       - production
       - stage
-      
+
 Conditions:
   CreateProdResources: !Equals [!Ref Environment, production]
 
@@ -218,11 +218,11 @@ You could divide it into the following units.
 
 This way you would be able to make targeted changes to the infrastructure which will not affect all parts of it. You can use cross-reference stack values to reference/use resources from other stacks.
 
-## Cloudformation is AWS
+## CloudFormation is AWS
 
-Majority of the things that I've learned about different AWS services is through Cloudformation docs. A lot of **[Important]** things which you might miss while using the Console have to
+Majority of the things that I've learned about different AWS services is through CloudFormation docs. A lot of **[Important]** things which you might miss while using the Console have to
 be explicitly specified when using CFN Templates which provides a wholesome picture of that AWS service. You should read about all the attributes in the docs when defining a resource. It will help you gain a more in-depth understanding of how the service works under the hood.
 
 ## Conclusion
 
-Well, that's about it. In this post, I went through some of the things I learned while working with CloudFormation. Two years ago, I started using Cloudformation and I've never looked back at the Console for creating things in AWS. From side projects to enterprise Cloudformation has always proven itself to be a great choice for managing Cloud Infrastructure on AWS. If you've never tried it I encourage you to try it once. Start with small and remember Sky is the Limit! 🚀
+Well, that's about it. In this post, I went through some of the things I learned while working with CloudFormation. Two years ago, I started using CloudFormation and I've never looked back at the Console for creating things in AWS. From side projects to enterprise CloudFormation has always proven itself to be a great choice for managing Cloud Infrastructure on AWS. If you've never tried it I encourage you to try it once. Start with small and remember Sky is the Limit! 🚀
