@@ -201,6 +201,57 @@ This way if you deploy this template in `stage` environment **Cloudtrail** will 
 
 A lot of times you will have multiple stacks that powers your project's infrastructure. In a lot of those scenarios, you might want to use a resource across multiple stacks. For example, you could have a **Network** stack that manages your **VPC**s and you will need to refer to VPCs defined in that stack when creating resources in other stacks. In such cases, it is not the right approach to copy-paste values from one stack and hardcode them in another stack. Instead, it's advisable to use cross-stack references using **Export** and **Import**.
 
+The following stack exports values of 2 resources that it creates. The first one is the ID of a VPC exported by the name `!Sub ${AWS::StackName}-VPCId` where `{AWS::StackName}` is the unique name of that stack. It's a good practice to **prefix your exported
+values with the Stack id/name** to avoid name collisions. The second exported value is the Subnet Id of a public subnet.
+
+```yaml
+# vpc.yaml
+# Stack Name is "VPC-Stack"
+Outputs:
+  VPCId:
+    Description: The ID of the VPC that this stack creates
+    Value: !Ref MainVPC
+    Export:
+      ## If Stack name is "VPC-Stack" then this value is "VPC-Stack-VPCId"
+      Name: !Sub ${AWS::StackName}-VPCId
+  PublicSubnetOne:
+    Description: Public subnet one
+    Value: !Ref PublicSubnetOne
+    Export:
+      Name: !Sub ${AWS::StackName}-PublicSubnetOne
+```
+
+This is how you would use these values in an another stack.
+
+```yaml
+# another-stack.yaml
+Parameters:
+  VPCStack:
+    Description: Name of the VPC Stack
+    Type: String
+    Default: VPC-Stack
+
+Resources:
+  
+  SecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Outbound Access To Anywhere
+      VpcId:
+        # This value after substitution becomes "VPC-Stack-VPCId"
+        Fn::ImportValue: !Sub '${VPCStack}-VPCId'
+
+  BatchCompute:
+    Type: 'AWS::Batch::ComputeEnvironment'
+    Properties:
+      Type: Managed
+      ComputeResources:
+        Subnets:
+          - Fn::ImportValue: !Sub '${VPCStack}-PublicSubnetOne'
+        Type: Ec2
+```
+
+To import a resource reference out of a stack you need to use the exact same name with which that resource was exported.
 One caveat with using this approach is that once an exported value is used (imported) in another stack it can not be changed.
 
 ## Divide your Stacks into Units
@@ -209,7 +260,7 @@ Now I've learned this lesson from a real-life experience where I created a **250
 
 In general, your Stack should be like a unit of similar resources that all achieve one primary goal. For instance, a typical web architecture includes a database, API server, frontend server.
 
-You could divide it into the following units.
+You could divide it into the following stacks.
 
 - **AppName-VPC** - that creates VPC,Subnets,VPC Endpoints, IG, NAT Gateways etc.
 - **AppName-API** - that creates the API server resources like AutoScaling group, Launch Config, Security Groups, S3 Buckets, Load Balancers.
