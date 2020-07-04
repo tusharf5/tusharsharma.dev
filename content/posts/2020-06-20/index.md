@@ -54,7 +54,7 @@ Before react hooks, function components were called stateless components. So, if
 
 **3. Function components capture the rendered values**
 
-This is one of the most compelling reasons for writing your components using functions. You see, state management in class components is done by modifying the value of `this`. This behavior could introduce inconsistencies in your class methods if they are asynchronous (see below example). The reason for these inconsistencies in most of the cases is that the value of `this` gets updated with the latest state/props but the class method was executed for an older state/props.
+This is one of the most compelling reasons for writing your components using functions. You see, state management in class components is done by modifying the value of `this`. The behavior of `this` keyword could introduce inconsistencies in your class methods if they are asynchronous (see below example). The reason for these inconsistencies in most of the cases is that the value of `this` in the lifetime of an execution of a function could change.
 
 This is not the case with function components where each render gets its own unique state and props using JS scopes.
 
@@ -62,11 +62,15 @@ This is not the case with function components where each render gets its own uni
 class MyComponent extends React.Component {
 
  async onClick() {
-   await increaseCountInServer(this.state.count + 1)
-   // at this point this.state.count could have a new value
-   // different from what it was when this function execution was started
-   // if the button was clicked multiple times
+   // execution starts on a click
+   // at this point let's assume value of this.state.count is 0
    this.setState({ count: this.state.count + 1 })
+   // the function execution is paused and will continue once the server responds back
+   await increaseCountInServer(this.state.count + 1);
+   // the server responds back so the execution is resumed from here
+   // at this point this.state.count could have a different value 
+   // if this button was clicked multiple times
+   this.props.onChange(this.state.count + 1);
  }
 
  render() {
@@ -74,6 +78,10 @@ class MyComponent extends React.Component {
  }
 }
 ```
+
+The below image depicts this issue with some visuals. See the digram flow in this order *1 -> 2 -> 3 -> 4 -> 5 -> 6* which is how Javascript will execute the above React code on multiple clicks. (Open in a new window to zoom in)
+
+![React Class this value](./react-class-this-issue.png)
 
 This behavior is beautifully explained in this [blog post](https://overreacted.io/how-are-function-components-different-from-classes/) by Dan. I would highly recommend reading this blog post.
 
@@ -84,10 +92,14 @@ class MyComponent extends React.Component {
 
  async onClick() {
    const { count } = this.state;
-   await increaseCountInServer(count + 1)
-   // count will always have the same value
-   // even if this.state.count has a newwer value
+   // execution starts on a click
+   // at this point let's assume value of count is 0
    this.setState({ count: count + 1 })
+   // the function execution is paused and will continue once the server responds back
+   await increaseCountInServer(count + 1);
+   // the server responds back so the execution is resumed from here
+   // at this point count is still 0
+   this.props.onChange(count + 1);
  }
 
  render() {
@@ -104,17 +116,17 @@ Hooks enable us to create some nice abstractions around re-usable functionalitie
 
 Alright, enough of why write function components using hooks. Let's see how to think about hooks, specifically the `useEffect` hook.
 
-When I first started using the `useEffect` hook, I was trying to use the same mental model I had for a class component and applying it to the `useEffect` which was that a `useEffect` with an empty dependency set `[]` is a replacement for `componentDidMount` otherwise it is a replacement for `componentDidUpdate`. Also, whatever variables I am using inside of my hook I need to specify those variables in the dependency list.
+When I first started using the `useEffect` hook, I was trying to use the same mental model I had for class components and applying it to the `useEffect` which was that a `useEffect` with an empty dependency set `[]` is a replacement for `componentDidMount` otherwise it is a replacement for `componentDidUpdate`. Also, whatever variables I am using inside of my hook I need to specify those variables in the dependency list.
 
 A problem with this mental model is that is is very limiting. It limits us from correctly using hooks and exploring outside of the obvious use case of `componentDidMount` and `componentDidUpdate`.
 
-After using them for a while now, I think of *useEffect as a way to perform side effects in a component*. One has to unlearn the idea of `componentDidMount` and `componentDidUpdate` to think of it like that.
+After using them for a while now, I think of `useEffect` as **a place to perform side effects** in a component. One has to unlearn the idea of `componentDidMount` and `componentDidUpdate` to think of it like that.
 
 ![React useEffect hooks Mental Model Using Effects](./react-side-effects.png)
 
-Look at all these side-effects, all of these side-effects should be taking place inside of a `useEffect` hook.
+The side-effects shown in the above image are a good fit for `useEffect`.
 
-Another thing that helps in better understanding this new mental model is to think of a function component's lifecycle as a timeline of renders i.e A component in its lifetime renders multiple times. Each render gets its own unique copy of the funtions defined in it, props, and hooks.
+Another thing that helps in better understanding this new mental model is to think of a function component's lifecycle as a timeline of renders i.e A component in its lifetime renders multiple times. Each render call gets its own unique copy of the variables, funtions, props, and hooks defined inside of the component function.
 
 > Note - Each render doesn't necessarily mean that its corresponding DOM was also updated.
 
@@ -144,9 +156,9 @@ function MyHooksComponent() {
 
 The highlighted function inside the first react component is not a hook but it is performing a side effect(API call). The second version is using a `useEffect` hook for the same. So how the hook version is any different from the non-hook version.
 
-The only benefit of using the `useEffect`, in this case, is that you would not have to compute the value of `firstRender`(which would require some logic and state), `useEffect` dependency list will take care of that. It will make sure that it is only run after the first render and never again in the current lifecycle of this component.
+The only benefit of using the `useEffect`, in this case, is that you would not have to compute the value of the variable `firstRender` which would require some logic and state. In case of the `useEffect`, the dependency list will take care of that. It will make sure that it is only run after the first render and never again in the current lifecycle of this component.
 
-Let's talk about the dependency list of the `useEffect` hook. I like to think of the dependency list as *variables that when changed, triggers a side-effect*. In the above code, there is no variable in the dependency list (`[]`) so the hook will only be triggered after the first render.
+Let's talk about the dependency list of the `useEffect` hook. I like to think of the dependency list as **things that when changed, triggers the side-effect**. In the above code, there is no variable in the dependency list (`[]`) so the hook will only be triggered once.
 
 So why use the `useEffect` hook if we can do something similar with using regular JS functions?
 
@@ -154,18 +166,11 @@ Well, it provides a lot of built-in features that we'll not get when using plain
 
 **1. Conditionally run your side-effects**
 
-The dependency list in the hook lets you define *change in which variables will trigger your side-effect*. This is super useful as you can exactly define when your side-effect runs. This is not possible to replicate, as to see if any variable has changed we need its current value as well as the previous value and in function components, we only have access to the current values of props.
+The dependency list in the hook lets you define **which variables will trigger your side-effect on change**. This is super useful as you can exactly define when your side-effect runs. This is not possible to replicate, as to see if any variable has changed we need its current value as well as the previous value and in function components, we only have access to the current values of props.
 
 Let's say I have a component receives 10 props and I only want to run my side-effect when there is a change in one specific prop. This is an easy task as I can define my hook with the side-effect and I will add the prop which should trigger the side-effect as a dependency. Now, no matter how many times the other props changed or in other words the component re-renders, the `useEffect` side-effect will only run when there is a change in the props defined in the dependency list of our hook.
 
 ```jsx
-function MyHooksComponent({ userId }) {
-  useEffect(() => {
-    await fetch(...);
-  }, [userId])
-  return <div>{userId}</div>;
-}
-
 function MyComponent({ userId }) {
   async function subsribeToUser() {
     await fetch(...);
@@ -174,6 +179,13 @@ function MyComponent({ userId }) {
   if(userId !== prevUserId) {
     subsribeToUser();
   }
+  return <div>{userId}</div>;
+}
+
+function MyHooksComponent({ userId }) {
+  useEffect(() => {
+    await fetch(...);
+  }, [userId])
   return <div>{userId}</div>;
 }
 ```
