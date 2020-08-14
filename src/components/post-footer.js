@@ -39,7 +39,11 @@ export default function PostFooter({ title, url, id }) {
 
   const onLike = useCallback(() => {
     const registerLike = () =>
-      fetch(`https://your-blog-likes.now.sh/?id=${encodeURIComponent(id)}`);
+      fetch(
+        `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
+          id
+        )}`
+      );
     if (!liked) {
       try {
         registerLike();
