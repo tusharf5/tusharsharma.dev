@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
+import { nanoid } from "nanoid";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { UUID } from "../utils/constants";
@@ -10,7 +11,7 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     !uuid && setUuid(nanoid(23));
-  }, []);
+  }, [uuid, setUuid]);
 
   return (
     <StaticQuery

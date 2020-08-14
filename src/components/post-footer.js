@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { classList } from "dynamic-class-list";
+import { nanoid } from "nanoid";
 
 import emptyHeart from "../images/heart-empty.svg";
 import fillHeart from "../images/hear-fill.svg";
@@ -42,7 +43,7 @@ export default function PostFooter({ title, url, postId }) {
 
   useEffect(() => {
     !uuid && setUuid(nanoid(23));
-  }, []);
+  }, [uuid, uuid]);
 
   const onLike = useCallback(() => {
     const registerLike = () =>
@@ -53,10 +54,10 @@ export default function PostFooter({ title, url, postId }) {
       );
     if (!liked) {
       try {
+        setLiked(true);
         registerLike();
       } catch {}
     }
-    setLiked(!liked);
   }, [postId, setLiked, liked]);
 
   useEffect(() => {
