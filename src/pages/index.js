@@ -1,20 +1,31 @@
 /* eslint-disable */
-import React from 'react';
-import { graphql } from 'gatsby';
+import React, { useEffect } from "react";
+import { graphql } from "gatsby";
+import { nanoid } from "nanoid";
 
-import Layout from '../components/layout';
-import Seo from '../components/seo';
-import PostCard from '../components/post-card';
-import Header from '../components/header';
+import Layout from "../components/layout";
+import Seo from "../components/seo";
+import PostCard from "../components/post-card";
+import Header from "../components/header";
+
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { UUID } from "../utils/constants";
 
 const IndexPage = ({ data }) => {
   const { edges: posts } = data.allMdx;
+
+  const [uuid, setUuid] = useLocalStorage(UUID, null);
+
+  useEffect(() => {
+    console.log("here");
+    !uuid && setUuid(nanoid(23));
+  }, []);
 
   return (
     <Layout>
       <Seo />
       <Header />
-      <main className='index'>
+      <main className="index">
         <ul>
           {posts.map(({ node: post }) => (
             <li key={post.id}>

@@ -98,7 +98,7 @@
 
     h1:after {
       border-bottom: 2px dashed var(--h1-dash-color);
-      content: '';
+      content: "";
       width: 100px;
       display: block;
       margin: 0.2em auto 0;
@@ -120,7 +120,7 @@
     h3:before {
       border-radius: 50%;
       background-color: var(--sub-head-before);
-      content: '';
+      content: "";
       width: 6px;
       display: inline-block;
       height: 6px;
@@ -135,7 +135,7 @@
 
     h4:before {
       background-color: var(--sub-head-before);
-      content: '';
+      content: "";
       width: 6px;
       display: inline-block;
       height: 2px;
@@ -324,5 +324,11 @@
       text-align: center;
       margin: 2em 0;
     }
+  }
+}
+
+body.dark-mode {
+  img {
+    filter: invert(0.88);
   }
 }

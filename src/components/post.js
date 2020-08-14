@@ -1,13 +1,24 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import React, { useEffect, useRef } from "react";
+import { graphql } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+import mediumZoom from "medium-zoom";
 
-import Seo from './seo';
-import Layout from './layout';
-import Header from './header';
-import PostFooter from './post-footer';
+import Seo from "./seo";
+import Layout from "./layout";
+import Header from "./header";
+import PostFooter from "./post-footer";
 
 const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
+  const body = useRef(null);
+
+  useEffect(() => {
+    const zoom = mediumZoom();
+    const bodyNode = body.current;
+    zoom.attach([...bodyNode.querySelectorAll("img")]);
+    return () => {
+      zoom.detach([...bodyNode.querySelectorAll("img")]);
+    };
+  }, []);
   return (
     <Layout>
       <Seo
@@ -16,13 +27,13 @@ const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
         keywords={[...mdx.frontmatter.tags, mdx.frontmatter.category]}
       />
       <Header />
-      <main className='blog-article'>
-        <article className='markdown-body'>
+      <main className="blog-article">
+        <article ref={body} className="markdown-body">
           <h1>{mdx.frontmatter.title}</h1>
           <MDXRenderer>{mdx.body}</MDXRenderer>
         </article>
       </main>
-      <PostFooter url={mdx.fields.slug} title={mdx.frontmatter.title} />
+      <PostFooter id={id} url={mdx.fields.slug} title={mdx.frontmatter.title} />
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import { StaticQuery, graphql } from 'gatsby';
+import React from "react";
+import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+import { StaticQuery, graphql } from "gatsby";
 
 function SEO({ description, lang, meta, keywords = [], title }) {
   return (
@@ -16,7 +16,7 @@ function SEO({ description, lang, meta, keywords = [], title }) {
             htmlAttributes={{
               lang
             }}
-            title={`${title ? title + ' | ' : ''}${
+            title={`${title ? title + " | " : ""}${
               data.site.siteMetadata.title
             }`}
             meta={[
@@ -61,14 +61,15 @@ function SEO({ description, lang, meta, keywords = [], title }) {
                     }
                   : []
               )
-              .concat(meta)}>
-            {process.env.NODE_ENV === 'production' && (
+              .concat(meta)}
+          >
+            {process.env.NODE_ENV === "production" && (
               <script
                 async
-                src='https://www.googletagmanager.com/gtag/js?id=UA-124607330-1'
+                src="https://www.googletagmanager.com/gtag/js?id=UA-124607330-1"
               />
             )}
-            {process.env.NODE_ENV === 'production' && (
+            {process.env.NODE_ENV === "production" && (
               <script>
                 {`
               window.dataLayer = window.dataLayer || [];
@@ -78,6 +79,14 @@ function SEO({ description, lang, meta, keywords = [], title }) {
               gtag('js', new Date());
         
               gtag('config', 'UA-124607330-1');
+
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                
+                ga('create', 'UA-124607330-1', 'auto');
+                ga('send', 'pageview');
               `}
               </script>
             )}
