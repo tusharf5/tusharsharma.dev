@@ -8,18 +8,8 @@ import Seo from "../components/seo";
 import PostCard from "../components/post-card";
 import Header from "../components/header";
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { UUID } from "../utils/constants";
-
 const IndexPage = ({ data }) => {
   const { edges: posts } = data.allMdx;
-
-  const [uuid, setUuid] = useLocalStorage(UUID, null);
-
-  useEffect(() => {
-    console.log("here");
-    !uuid && setUuid(nanoid(23));
-  }, []);
 
   return (
     <Layout>

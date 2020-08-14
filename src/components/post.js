@@ -33,7 +33,7 @@ const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
           <MDXRenderer>{mdx.body}</MDXRenderer>
         </article>
       </main>
-      <PostFooter id={id} url={mdx.fields.slug} title={mdx.frontmatter.title} />
+      <PostFooter id={mdx.frontmatter.uid} url={mdx.fields.slug} title={mdx.frontmatter.title} />
     </Layout>
   );
 };

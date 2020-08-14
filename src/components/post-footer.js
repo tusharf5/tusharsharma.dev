@@ -11,37 +11,44 @@ import { UUID } from "../utils/constants";
 function shareOnFB({ title, url }) {
   const fullUrl = encodeURI(`https://tusharsharma.dev${url}`);
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${fullUrl}&t=${title}`;
-  window.open(
-    fbUrl,
-    "FacebookWindow",
-    "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
-  );
+  typeof window !== "undefined" &&
+    window.open(
+      fbUrl,
+      "FacebookWindow",
+      "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
+    );
   return false;
 }
 
 function shareOntwitter({ title, url }) {
   const fullUrl = encodeURI(`https://tusharsharma.dev${url}`);
   const tweetUrl = `https://twitter.com/intent/tweet?url=${fullUrl}&via=tusharf5&text=${title}`;
-  window.open(
-    tweetUrl,
-    "TwitterWindow",
-    "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
-  );
+  typeof window !== "undefined" &&
+    window.open(
+      tweetUrl,
+      "TwitterWindow",
+      "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
+    );
   return false;
 }
 
-export default function PostFooter({ title, url, id }) {
+export default function PostFooter({ title, url, id: postId }) {
   const [likes, setLikes] = useState(false);
   const [shake, setShake] = useState(true);
-  const [liked, setLiked] = useLocalStorage(`${UUID}::${id}`, false);
+  const [uuid, setUuid] = useLocalStorage(UUID, null);
+  const [liked, setLiked] = useLocalStorage(`${uuid}::${postId}`, false);
 
   const image = useRef(null);
+
+  useEffect(() => {
+    !uuid && setUuid(nanoid(23));
+  }, []);
 
   const onLike = useCallback(() => {
     const registerLike = () =>
       fetch(
         `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
-          id
+          postId
         )}`
       );
     if (!liked) {
@@ -50,7 +57,7 @@ export default function PostFooter({ title, url, id }) {
       } catch {}
     }
     setLiked(!liked);
-  }, [id, setLiked, liked]);
+  }, [postId, setLiked, liked]);
 
   useEffect(() => {
     const onLikes = newLikes => setLikes(newLikes.val());
@@ -58,15 +65,15 @@ export default function PostFooter({ title, url, id }) {
 
     const fetchData = async () => {
       db = await loadDb();
-      db.child(id).on("value", onLikes);
+      db.child(postId).on("value", onLikes);
     };
 
     fetchData();
 
     return function cleanup() {
-      db.child(id).off("value", onLikes);
+      db.child(postId).off("value", onLikes);
     };
-  }, [id, setLikes]);
+  }, [postId, setLikes]);
 
   useEffect(() => {
     let intervalId = null;

@@ -1,21 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StaticQuery, graphql } from 'gatsby';
+import React from "react";
+import PropTypes from "prop-types";
+import { StaticQuery, graphql } from "gatsby";
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { UUID } from "../utils/constants";
+
+const Layout = ({ children }) => {
+  const [uuid, setUuid] = useLocalStorage(UUID, "");
+
+  useEffect(() => {
+    !uuid && setUuid(nanoid(23));
+  }, []);
+
+  return (
+    <StaticQuery
+      query={graphql`
+        query SiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => <>{children}</>}
-  />
-);
+      `}
+      render={data => <>{children}</>}
+    />
+  );
+};
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired
