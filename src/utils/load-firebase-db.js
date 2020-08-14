@@ -1,10 +1,10 @@
-export default async function loadDb() {
-  const { firebase } = await import("@firebase/app");
+import * as firebase from "firebase/app";
 
-  await import("@firebase/database");
+export default async function loadDb() {
+  await import("firebase/database");
   try {
     firebase.initializeApp({
-      databaseURL: "https://tusharsharma-website.firebaseio.com"
+      databaseURL: "https://tusharsharma-website.firebaseio.com",
     });
   } catch (error) {
     /*

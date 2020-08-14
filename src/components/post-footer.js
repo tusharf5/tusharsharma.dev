@@ -65,14 +65,30 @@ export default function PostFooter({ title, url, postId }) {
     let db;
 
     const fetchData = async () => {
-      db = await loadDb();
-      db.child(postId).on("value", onLikes);
+      try {
+        db = await loadDb();
+
+        db.child(postId).on("value", onLikes, function (error) {
+          console.error(error);
+        });
+      } catch (e) {
+        console.log(e);
+      }
     };
 
-    fetchData();
+    async function fetchD() {
+      try {
+        await fetchData();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    fetchD();
 
     return function cleanup() {
-      db.child(postId).off("value", onLikes);
+
+      db && db.child(postId).off("value", onLikes);
     };
   }, [postId, setLikes]);
 

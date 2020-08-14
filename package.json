@@ -5,12 +5,11 @@
   "version": "0.1.0",
   "author": "Tushar Sharma <ts17995@gmail.com>",
   "dependencies": {
-    "@firebase/app": "^0.6.10",
-    "@firebase/database": "^0.6.11",
     "@mdx-js/mdx": "^1.0.0",
     "@mdx-js/react": "^1.0.0",
     "@mdx-js/tag": "0.20.3",
     "dynamic-class-list": "^1.0.0",
+    "firebase": "^7.18.0",
     "gatsby": "^2.0.0",
     "gatsby-image": "^2.0.0",
     "gatsby-plugin-catch-links": "^2.0.0",
