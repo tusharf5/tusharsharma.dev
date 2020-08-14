@@ -13,15 +13,7 @@ excerpt: 'We can use promises and sprinkle some recursion on top of it to create
 For the past 2 years, I've worked extensively with B2B services which include both using and for the most part
 building B2B services using/connecting multiple 3rd party APIs. This blog post is about a design pattern which I recently had to implement for such a service.
 
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Service API
-    Browser->>Service API: Request 1
-    activate Service API
-    Service API--xBrowser: Failed
-    deactivate Service API
-```
+![Seq 1](./seq-1.png)
 
 A major difference between calling a HTTP endpoint from a UI and from a backend is that when we call a HTTP endpoint
 from a UI (browser, mobile device, apple watch) and it fails we can notify the user that the action (calling API) was
@@ -262,23 +254,7 @@ aggregateData();
 
 Now each call to a 3rd party API will behave in a way similar to what is shown in the diagram below.
 
-```mermaid
-sequenceDiagram
-    participant gmailApiCall
-    participant GMAIL API
-    gmailApiCall->>GMAIL API: Request 1
-    activate GMAIL API
-    GMAIL API--xgmailApiCall: Failed Response
-    deactivate GMAIL API
-    gmailApiCall->>GMAIL API: Request 2
-    activate GMAIL API
-    GMAIL API--xgmailApiCall: Failed Response
-    deactivate GMAIL API
-    gmailApiCall->>GMAIL API: Request 3
-    activate GMAIL API
-    GMAIL API-->gmailApiCall: Success Response
-    deactivate GMAIL API
-```
+![Seq 3](./seq-2.png)
 
 Of course this is not the only way or the best way to solve this problem but it makes it a lot better. In our case,
 it certainly did bring down the number of times the function was getting called on a failed response.
