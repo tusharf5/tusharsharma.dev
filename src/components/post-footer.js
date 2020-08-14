@@ -32,7 +32,7 @@ function shareOntwitter({ title, url }) {
   return false;
 }
 
-export default function PostFooter({ title, url, id: postId }) {
+export default function PostFooter({ title, url, postId }) {
   const [likes, setLikes] = useState(false);
   const [shake, setShake] = useState(true);
   const [uuid, setUuid] = useLocalStorage(UUID, null);
@@ -60,7 +60,7 @@ export default function PostFooter({ title, url, id: postId }) {
   }, [postId, setLiked, liked]);
 
   useEffect(() => {
-    const onLikes = newLikes => setLikes(newLikes.val());
+    const onLikes = (newLikes) => setLikes(newLikes.val());
     let db;
 
     const fetchData = async () => {
@@ -98,7 +98,7 @@ export default function PostFooter({ title, url, id: postId }) {
           className={classList({
             liked: liked,
             unliked: !liked,
-            shakeMe: liked ? false : shake
+            shakeMe: liked ? false : shake,
           })}
           onClick={onLike}
           src={liked ? fillHeart : emptyHeart}
