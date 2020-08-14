@@ -43,7 +43,7 @@ export default function PostFooter({ title, url, postId }) {
 
   useEffect(() => {
     !uuid && setUuid(nanoid(23));
-  }, [uuid, uuid]);
+  }, [uuid, setUuid]);
 
   const onLike = useCallback(() => {
     const registerLike = () =>
