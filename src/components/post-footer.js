@@ -39,12 +39,12 @@ async function fetchLikesCount() {
     const body = await resp.json();
     return body;
   } catch (e) {
-    console.error(e);
+    console.error("fetchLikesCount", e);
     return {};
   }
 }
 
-function registerLike(postId) {
+async function registerLike(postId) {
   return fetch(
     `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
       postId
@@ -55,7 +55,7 @@ function registerLike(postId) {
 export default function PostFooter({ title, url, postId }) {
   const [likes, setLikes] = useState(false);
   const [shake, setShake] = useState(true);
-  const [uuid] = useLocalStorage(UUID, "");
+  const [uuid] = useLocalStorage(UUID);
   const [liked, setLiked] = useLocalStorage(`${uuid}::${postId}`, false);
 
   // effect on likes
@@ -73,9 +73,13 @@ export default function PostFooter({ title, url, postId }) {
   // fetch likes side effect
   useEffect(() => {
     const __getlikes = async () => {
+      // bad hack need to force update like state
+      setLiked(!liked);
       const likes = await fetchLikesCount();
       const count = likes[postId] | null;
       setLikes(count);
+      // bad hack need to force update like state
+      setLiked(liked);
     };
     __getlikes();
   }, [postId, setLikes]);
@@ -83,12 +87,15 @@ export default function PostFooter({ title, url, postId }) {
   // shaking side effect
   useEffect(() => {
     let intervalId = null;
-    const interval = setInterval(() => {
-      setShake(true);
-      intervalId = setTimeout(() => {
-        setShake(false);
-      }, 1000);
-    }, 10000);
+    let interval = null;
+    if (!liked) {
+      interval = setInterval(() => {
+        setShake(true);
+        intervalId = setTimeout(() => {
+          setShake(false);
+        }, 1000);
+      }, 10000);
+    }
     return () => {
       clearInterval(interval);
       clearTimeout(intervalId);
