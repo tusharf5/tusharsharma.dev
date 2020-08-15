@@ -1,5 +1,5 @@
 const path = require('path');
-const kebabCase = require('lodash/kebabCase');
+const kebabCase = require('lodash.kebabcase');
 const { createFilePath } = require('gatsby-source-filesystem');
 
 // thanks to https://gist.github.com/jzazove/1479763

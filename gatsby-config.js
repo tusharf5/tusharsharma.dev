@@ -23,7 +23,6 @@ module.exports = {
     ]
   },
   plugins: [
-    "gatsby-plugin-lodash",
     "gatsby-plugin-sass",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",

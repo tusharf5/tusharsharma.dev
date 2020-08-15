@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import mediumZoom from "medium-zoom";
 
 import Seo from "./seo";
 import Layout from "./layout";
@@ -9,16 +8,6 @@ import Header from "./header";
 import PostFooter from "./post-footer";
 
 const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
-  const body = useRef(null);
-
-  useEffect(() => {
-    const zoom = mediumZoom();
-    const bodyNode = body.current;
-    zoom.attach([...bodyNode.querySelectorAll("img")]);
-    return () => {
-      zoom.detach([...bodyNode.querySelectorAll("img")]);
-    };
-  }, []);
   return (
     <Layout>
       <Seo
@@ -28,12 +17,16 @@ const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
       />
       <Header />
       <main className="blog-article">
-        <article ref={body} className="markdown-body">
+        <article className="markdown-body">
           <h1>{mdx.frontmatter.title}</h1>
           <MDXRenderer>{mdx.body}</MDXRenderer>
         </article>
       </main>
-      <PostFooter postId={mdx.frontmatter.uid} url={mdx.fields.slug} title={mdx.frontmatter.title} />
+      <PostFooter
+        postId={mdx.frontmatter.uid}
+        url={mdx.fields.slug}
+        title={mdx.frontmatter.title}
+      />
     </Layout>
   );
 };

@@ -21,11 +21,11 @@
   --global-padding-top: 45px;
   --invert-image-value: -1;
   --global-padding-left: 45px;
-  --font-family: 'SF UI Text', -apple-system, -apple-system-body,
-    BlinkMacSystemFont, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol';
-  --code-font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, Courier,
-    monospace, 'PingFang SC', 'Microsoft YaHei';
+  --font-family: "SF UI Text", -apple-system, -apple-system-body,
+    BlinkMacSystemFont, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  --code-font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace, "PingFang SC", "Microsoft YaHei";
 }
 
 body.dark-mode {
@@ -46,10 +46,6 @@ body.dark-mode {
   --pre-bg: #f6f8fa;
   --anchor-color: #6dadf2;
   --invert-image-value: 1;
-}
-
-.medium-zoom-overlay {
-  background-color: var(--body-bg) !important;
 }
 
 @media only screen and (max-width: 500px) {

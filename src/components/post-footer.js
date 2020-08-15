@@ -5,7 +5,6 @@ import { nanoid } from "nanoid";
 import emptyHeart from "../images/heart-empty.svg";
 import fillHeart from "../images/hear-fill.svg";
 
-import loadDb from "../utils/load-firebase-db";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { UUID } from "../utils/constants";
 
@@ -41,6 +40,18 @@ export default function PostFooter({ title, url, postId }) {
 
   const image = useRef(null);
 
+  const getLikes = useCallback(async () => {
+    try {
+      const resp = await fetch(
+        "https://tusharsharma-website.firebaseio.com/likes/.json"
+      );
+      const body = await resp.json();
+      return body;
+    } catch (e) {
+      return {};
+    }
+  }, []);
+
   useEffect(() => {
     !uuid && setUuid(nanoid(23));
   }, [uuid, setUuid]);
@@ -53,44 +64,23 @@ export default function PostFooter({ title, url, postId }) {
         )}`
       );
     if (!liked) {
-      try {
-        setLiked(true);
-        registerLike();
-      } catch {}
+      setLiked(true);
+      registerLike()
+        .then(() => {
+          setLikes(likes + 1);
+        })
+        .catch((e) => console.log(e));
     }
-  }, [postId, setLiked, liked]);
+  }, [postId, setLiked, liked, setLikes, likes]);
 
   useEffect(() => {
-    const onLikes = (newLikes) => setLikes(newLikes.val());
-    let db;
-
-    const fetchData = async () => {
-      try {
-        db = await loadDb();
-
-        db.child(postId).on("value", onLikes, function (error) {
-          console.error(error);
-        });
-      } catch (e) {
-        console.log(e);
-      }
+    const __getlikes = async () => {
+      const likes = await getLikes();
+      const count = likes[postId] | null;
+      setLikes(count);
     };
-
-    async function fetchD() {
-      try {
-        await fetchData();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    fetchD();
-
-    return function cleanup() {
-
-      db && db.child(postId).off("value", onLikes);
-    };
-  }, [postId, setLikes]);
+    __getlikes();
+  }, [postId, setLikes, getLikes]);
 
   useEffect(() => {
     let intervalId = null;
