@@ -69,7 +69,10 @@ export default function PostFooter({ title, url, postId }) {
         .then(() => {
           setLikes(likes + 1);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          setLiked(false);
+          console.log(e);
+        });
     }
   }, [postId, setLiked, liked, setLikes, likes]);
 
