@@ -1,6 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { classList } from "dynamic-class-list";
-import { nanoid } from "nanoid";
 
 import emptyHeart from "../images/heart-empty.svg";
 import fillHeart from "../images/hear-fill.svg";
@@ -32,59 +31,56 @@ function shareOntwitter({ title, url }) {
   return false;
 }
 
+async function fetchLikesCount() {
+  try {
+    const resp = await fetch(
+      "https://tusharsharma-website.firebaseio.com/likes/.json"
+    );
+    const body = await resp.json();
+    return body;
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+}
+
+function registerLike(postId) {
+  return fetch(
+    `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
+      postId
+    )}`
+  );
+}
+
 export default function PostFooter({ title, url, postId }) {
   const [likes, setLikes] = useState(false);
   const [shake, setShake] = useState(true);
-  const [uuid, setUuid] = useLocalStorage(UUID, null);
+  const [uuid] = useLocalStorage(UUID, "");
   const [liked, setLiked] = useLocalStorage(`${uuid}::${postId}`, false);
 
-  const image = useRef(null);
-
-  const getLikes = useCallback(async () => {
-    try {
-      const resp = await fetch(
-        "https://tusharsharma-website.firebaseio.com/likes/.json"
-      );
-      const body = await resp.json();
-      return body;
-    } catch (e) {
-      return {};
-    }
-  }, []);
-
-  useEffect(() => {
-    !uuid && setUuid(nanoid(23));
-  }, [uuid, setUuid]);
-
+  // effect on likes
   const onLike = useCallback(() => {
-    const registerLike = () =>
-      fetch(
-        `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
-          postId
-        )}`
-      );
     if (!liked) {
       setLiked(true);
-      registerLike()
-        .then(() => {
-          setLikes(likes + 1);
-        })
-        .catch((e) => {
-          setLiked(false);
-          console.log(e);
-        });
+      setLikes(likes + 1);
+      registerLike(postId).catch((e) => {
+        setLiked(false);
+        console.log(e);
+      });
     }
-  }, [postId, setLiked, liked, setLikes, likes]);
+  }, [liked, setLiked, setLikes, likes, postId]);
 
+  // fetch likes side effect
   useEffect(() => {
     const __getlikes = async () => {
-      const likes = await getLikes();
+      const likes = await fetchLikesCount();
       const count = likes[postId] | null;
       setLikes(count);
     };
     __getlikes();
-  }, [postId, setLikes, getLikes]);
+  }, [postId, setLikes]);
 
+  // shaking side effect
   useEffect(() => {
     let intervalId = null;
     const interval = setInterval(() => {
@@ -103,7 +99,6 @@ export default function PostFooter({ title, url, postId }) {
     <footer className="footer">
       <div className="social-react">
         <img
-          ref={image}
           alt="heart like"
           className={classList({
             liked: liked,
