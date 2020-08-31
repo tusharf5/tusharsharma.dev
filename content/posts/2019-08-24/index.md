@@ -94,7 +94,7 @@ publicly with any server that should be able to securely communicate with the cl
 
 ### Private Key
 
-> A signature 🧩 is a hash of your message encrypted using your private key.
+> A signature is a hash of your message encrypted using your private key.
 > To verify a signature, the server also generates a hash of the same message, get the hash from the client
 > (by decrypting the signature with the client's public key), and checks that both hashes are the same.
 
@@ -135,21 +135,37 @@ Let's try to visualize this by looking at this conversation between a client and
 
 ### Securing the Communication - First Stage
 
+<NoteBox type="neutral" />
+
 > **Client** - Hey Server I’d like to connect to you using SSH?
+
+<NoteBox type="neutral" />
 
 > **Server** - Alright! here is my public key.
 
+<NoteBox type="neutral" />
+
 > **Client** - Okay. Let me check if my **known_hosts** file has that public key.
 
+<NoteBox type="neutral" />
+
 > **Client** - Aha! I have this key. That means I already know you. Great! I am less worried now.
+
+<NoteBox type="neutral" />
 
 > **Client** - So let’s create a **new** pair of public and private keys and generate a secret
 > which we will use to encrypt the connection moving forward.\*
 
+<NoteBox type="neutral" />
+
 > **Server** - Been there done that.
+
+<NoteBox type="neutral" />
 
 > **Client** - I have generated a **secret** using your public key, my private key, and a random number
 > that we just shared with each other. I am sending you a hash of this secret so you can match\*
+
+<NoteBox type="neutral" />
 
 > **Server** - Well, I did the same thing and guess what your hash matched mine. We're good to go.
 
@@ -165,22 +181,36 @@ negotiated encryption, so it is secure from outside systems.
 
 #### Key Pair Authentication - Asymmetric Encryption
 
+<NoteBox type="neutral" />
+
 > **Client** - Here’s the public key of my ssh key pair that I would like to use for authentication\*
 
+<NoteBox type="neutral" />
+
 > **Server** - Hmmm, let me check my **authorized_keys** file to see if it has that key in it.
+
+<NoteBox type="neutral" />
 
 > **Server** - I found it and I have generated a random number and encrypted that number
 > with the found public key. I am sending you that number in encrypted form. If you really own the private key,
 > you’d be able to decrypt this number and tell me what it is.\*
 
+<NoteBox type="neutral" />
+
 > **Client** - I see, I have an encrypted message. Let me decrypt this with my private key. Hmm, it is a number.
 > I will use my **private key** to encrypt the hash of this number and I will send it to the server to let
 > him know I know what the number is.\*
 
+<NoteBox type="neutral" />
+
 > **Client** - Sent :)
+
+<NoteBox type="neutral" />
 
 > **Server** - Let me also generate a hash of the number I sent you. I have also decrypted your message and it is a hash.
 > Aha! My hash matches the hash sent by you. You are the real owner\*
+
+<NoteBox type="neutral" />
 
 > **Server** - You are allowed to step in.
 

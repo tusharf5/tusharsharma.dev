@@ -38,3 +38,27 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
 
 12. **`README.md`**: A text file containing useful reference information about your project.
+
+## Add Notes
+
+```mdx
+<NoteBox type="danger" />
+
+> **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
+
+<NoteBox type="neutral" />
+
+> **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
+
+<NoteBox type="success" />
+
+> **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
+
+<NoteBox type="warning" />
+
+> **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
+
+<NoteBox type="primary" />
+
+> **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
+```

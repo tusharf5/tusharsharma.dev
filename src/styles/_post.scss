@@ -219,17 +219,54 @@
     }
 
     blockquote {
-      border-left: 4px dotted var(--blockquote-color);
-      padding: 0 12px;
-      color: var(--blockquote-color);
-      font-size: 0.9em;
+      padding: 0px 24px;
+      color: var(--blockquote-color-primary);
+      font-size: 1em;
       line-height: 1.9;
-      font-style: italic;
-      margin: 2em 0;
+      background-color: var(--blockquote-bg-color-primary);
+      border-radius: 4px;
+      margin: 0 -24px;
+      border: 2px solid currentColor;
+    }
+
+    .post-note-box {
+      &.neutral + blockquote {
+        background-color: var(--blockquote-bg-color-neutral);
+        color: var(--blockquote-color-neutral);
+      }
+      &.danger + blockquote {
+        background-color: var(--blockquote-bg-color-danger);
+        color: var(--blockquote-color-danger);
+      }
+      &.warning + blockquote {
+        background-color: var(--blockquote-bg-color-warning);
+        color: var(--blockquote-color-warning);
+      }
+      &.success + blockquote {
+        background-color: var(--blockquote-bg-color-success);
+        color: var(--blockquote-color-success);
+      }
+      &.primary + blockquote {
+        background-color: var(--blockquote-bg-color-primary);
+        color: var(--blockquote-color-primary);
+      }
+    }
+
+    blockquote p::first-letter {
+      font-size: 1.25em;
+      font-weight: 500;
     }
 
     blockquote blockquote {
       padding-right: 0;
+    }
+
+    blockquote + .post-note-box {
+      margin-top: 1em;
+    }
+
+    blockquote + blockquote {
+      margin-top: 1em;
     }
 
     table {

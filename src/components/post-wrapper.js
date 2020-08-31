@@ -5,6 +5,8 @@ import { MDXProvider } from '@mdx-js/react';
 import CodeSnippet from './code-snippet';
 import { preToCodeBlock } from '../utils/preToCodeBlock';
 
+import NoteBox from "./short-codes/NoteBox";
+
 // components is its own object outside of render so that the references to
 // components are stable
 const components = {
@@ -17,7 +19,8 @@ const components = {
     // it's possible to have a pre without a code in it
     return <pre {...preProps} />;
   },
-  code: CodeSnippet
+  code: CodeSnippet,
+  NoteBox: NoteBox,
 };
 
 export const wrapRootElement = ({ element }) => (
