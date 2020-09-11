@@ -1,6 +1,6 @@
 :root {
   --body-bg: #fff;
-  --color: #24292e;
+  --color: #2d3748;
   --heading-color: #142331;
   --h1-dash-color: #afec9e;
   --h2-left-border: #cce5ff;
@@ -12,7 +12,7 @@
   --code-bg: #e2f0ff;
   --code-line-highlight: #f0f2f9;
   --pre-bg: #f6f8fa;
-  --anchor-color: #4183c4;
+  --anchor-color: #3182ce;
   --footer-color: #444;
   --blockquote-color-primary: #184394;
   --blockquote-color-danger: #941818;
@@ -29,7 +29,7 @@
   --global-padding-top: 45px;
   --invert-image-value: -1;
   --global-padding-left: 45px;
-  --font-family: "SF UI Text", -apple-system, -apple-system-body,
+  --font-family: "Rubik", "SF UI Text", -apple-system, -apple-system-body,
     BlinkMacSystemFont, Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
   --code-font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, Courier,
@@ -89,6 +89,7 @@ html {
 
 body {
   font-family: var(--font-family);
+  font-size: 20px;
   color: var(--color);
   line-height: 1.6;
   font-weight: 300;
@@ -119,7 +120,11 @@ h4,
 h5,
 h6 {
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.35em;
   cursor: text;
   color: var(--heading-color);
+}
+
+p {
+  line-height: 1.75em;
 }

@@ -9,7 +9,7 @@
     align-items: center;
     > span {
       margin-left: 12px;
-      font-weight: 500;
+      font-weight: 400;
       color: var(--blockquote-color);
       letter-spacing: 1px;
       -webkit-font-smoothing: subpixel-antialiased;
@@ -109,7 +109,7 @@
       > div {
         float: right;
         margin-right: 10px;
-        font-weight: 500;
+        font-weight: 400;
         cursor: pointer;
         &:last-child {
           margin-right: 0;

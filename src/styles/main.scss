@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
-@import './fonts/sf-ui/style.scss';
-@import './fonts/sf-mono/style.scss';
+// @import './fonts/sf-ui/style.scss';
+// @import './fonts/sf-mono/style.scss';
+@import './fonts/_rubik.scss';
 @import 'global';
 @import 'home';
 @import 'header';
@@ -9,4 +10,3 @@
 @import 'blog';
 @import 'post';
 @import 'post-card';
-

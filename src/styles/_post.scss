@@ -93,7 +93,7 @@
       font-size: 2.25em;
       line-height: 1.2;
       margin: 1em auto 1.2em;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     h1:after {
@@ -254,7 +254,7 @@
 
     blockquote p::first-letter {
       font-size: 1.25em;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     blockquote blockquote {
@@ -354,7 +354,7 @@
 
     b,
     strong {
-      font-weight: 500;
+      font-weight: 600;
     }
   }
 }
