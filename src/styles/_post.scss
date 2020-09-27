@@ -224,31 +224,41 @@
       font-size: 1em;
       line-height: 1.9;
       background-color: var(--blockquote-bg-color-primary);
+      box-shadow: 0 0 10px 10px var(--blockquote-bg-color-primary);
       border-radius: 4px;
       margin: 0 -24px;
       border: 2px solid currentColor;
+    }
+
+    blockquote > ul:last-child {
+      margin-bottom: 1em;
     }
 
     .post-note-box {
       &.neutral + blockquote {
         background-color: var(--blockquote-bg-color-neutral);
         color: var(--blockquote-color-neutral);
+        box-shadow: 0 0 10px 10px var(--blockquote-bg-color-neutral);
       }
       &.danger + blockquote {
         background-color: var(--blockquote-bg-color-danger);
         color: var(--blockquote-color-danger);
+        box-shadow: 0 0 10px 10px var(--blockquote-bg-color-danger);
       }
       &.warning + blockquote {
         background-color: var(--blockquote-bg-color-warning);
         color: var(--blockquote-color-warning);
+        box-shadow: 0 0 10px 10px var(--blockquote-bg-color-warning);
       }
       &.success + blockquote {
         background-color: var(--blockquote-bg-color-success);
         color: var(--blockquote-color-success);
+        box-shadow: 0 0 10px 10px var(--blockquote-bg-color-success);
       }
       &.primary + blockquote {
         background-color: var(--blockquote-bg-color-primary);
         color: var(--blockquote-color-primary);
+        box-shadow: 0 0 10px 10px var(--blockquote-bg-color-primary);
       }
     }
 
@@ -363,4 +373,16 @@ body.dark-mode {
   img {
     filter: invert(0.88);
   }
+}
+
+span.info-icon-unused {
+  background-color: #945818;
+  color: #fff;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1px;
 }
