@@ -8,7 +8,7 @@ tags:
   - hooks
   - react hooks
   - useEffect
-excerpt: 'This is almost a year late since react hooks first came out but in this blog post, I would like to revisit the concept of hooks in react, specifically on how to think about the useEffect hook.'
+excerpt: 'A little late but writing my thoughts on why React Hooks are great and especially the useEffect Hook.'
 ---
 
 With the addition of [Hooks](https://reactjs.org/docs/hooks-intro.html) in React, developers could use a lot of react features that were only available through class components in function components also. React hooks don't directly bring anything new to react. It provides an API to use features like local state, component lifecycle, etc in function components. So why use hooks in function components if you can do pretty much everything using class components? Let's see.
@@ -218,5 +218,7 @@ function MyHooksComponent({ userId }) {
 ```
 
 During the lifetime of this component, `useEffect` will only perform cleanup for a previous side-effect whenever it runs side-effect again. In the above image, it unsubscribes to userId `12` before subscribing to userId `20`. Now, how cool is that?. This is not available in class components.
+
+## Conclusion
 
 I think `useEffect` API is much more intuitive than options available in a class component. You just have to start thinking in terms of side-effects and when to run these side-effects. Thank you for reading this article. If you want to make any changes please submit a PR [here](https://github.com/tusharf5/tusharsharma.dev).
