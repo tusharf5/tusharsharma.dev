@@ -11,7 +11,7 @@ tags:
   - system manager
   - cross-stack
   - secrets in aws
-excerpt: "A post on how we use SSM Parameter Store for managing our AWS resources created by CloudFormation."
+excerpt: "How we use SSM Parameter Store for managing our AWS resources created by CloudFormation."
 ---
 
 At [Gerald](https://gerald.app), we have a fairly medium-sized AWS infrastructure with workloads that span multiple domains. We're using more than 50 different AWS services. For any change in our AWS account, we use CloudFormation (I'll refer to it as CFN).
