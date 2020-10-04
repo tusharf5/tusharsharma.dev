@@ -193,7 +193,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # unique ssm param key
-      Name: "/my_app/resources/s3/my_empty_bucket_name"
+      Name: "/my_app/resources/s3/archive_bucket"
       Type: String
       # value of the key is the name of the bucket
       # since "!Ref S3Bucket" returns the name of that bucket
@@ -320,52 +320,59 @@ We were quite happy with the results, the only thing left to figure out was that
 
 This was fairly easy as we were already using a shared npm package across multiple projects so we exported a JSON object in that package which lists all the resources and their keys.
 
-```js
+```js {8}
 // private npm package "@org/shared-package"
-export const paramStoreKeys = {
+export const ssmKeys = {
   my_app: {
     vpc: {
       vpc_id: "my_app/vpc/vpc_id",
     },
-    ecs: {
-      user_api_service_name: "my_app/ecs/user_api_service_name",
-    },
     s3: {
-      temp_object_bucket: "my_app/s3/temp_object_bucket",
+      archive_bucket: "my_app/s3/archive_bucket",
     },
     sqs: {
       temp_item_queue_url: "my_app/sqs/temp_item_queue_url",
     },
   },
 };
+```
 
+Then we can use it in our applications as shown below.
+
+```js {5}
 // script.js
-import { paramStoreKeys } from "@org/shared-package";
+import { ssmKeys } from "@org/shared-package";
 
-app.get("/add_to_queue", async (req, res) => {
-  const queueUrl = await getSSMParamValue(
-    paramStoreKeys.sqs.temp_item_queue_url
-  );
-  // add item to sqs queue queueUrl
+app.get("/add_to_s3", async (req, res) => {
+  const bucket = await getSSMParam(ssmKeys.my_app.s3.archive_bucket);
+  // add item to s3
   return res.send("Uploaded ✅");
   res.send("Uploading Failed ❌");
 });
 ```
 
-And we specify the same value for keys in the CFN templates.
+And we use the same keys when specifying these SSM Parameters in the CFN templates.
 
-```yaml {7}
+```yaml {15}
 Resources:
-  MyQueueUrlSSMParam:
+  MyEmptyBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      AccessControl: PublicRead
+      BucketName: my_empty_bucket
+
+  MyEmptyBucketSSMParam:
     Type: AWS::SSM::Parameter
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # unique ssm param key
-      Name: "my_app/sqs/temp_item_queue_url"
+      Name: "my_app/s3/archive_bucket"
       Type: String
       # value of the key is the name of the bucket
       # since "!Ref S3Bucket" returns the name of that bucket
-      Value: !Ref MyQueue
+      Value: !Ref MyEmptyBucket
 ```
 
 Whenever we want to add a new resource to our CFN Stack we create a new entry for it in the `paramStoreKeys` and use the same key
