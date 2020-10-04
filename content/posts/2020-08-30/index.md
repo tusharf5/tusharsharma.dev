@@ -316,9 +316,9 @@ always loading the latest value from the Store at that very moment when it needs
 
 ![SSM Parameters For A Better CloudFormation Experience](./solved.png)
 
-We were quite happy with the results, the only thing left to figure out was how will different applications know what is the Param Store key of a particular resource and what are all the Param Store values that can be accessed.
+We were quite happy with the results, the only thing left to figure out was that how will different applications know what is the Parameter Store key of a resource that it wants to access.
 
-This was an easy solution. We were already using a shared npm package across different projects so we created a JSON object in it which lists all the resources and their Store keys.
+This was fairly easy as we were already using a shared npm package across multiple projects so we exported a JSON object in that package which lists all the resources and their keys.
 
 ```js
 // private npm package "@org/shared-package"
@@ -373,10 +373,12 @@ in the CFN template. By following this approach, it has become so much easier to
 
 Another benefit that we found out later is that you can also use SSM Parameter Store keys to refer to resources across multiple stacks similar to the cross-stack reference feature but without any of its limitations. We've removed all of our stack `exports` and `imports` across all of our CFN stacks and replaced them with referencing resources via SSM Parameter Store.
 
-And BTW did I tell you that SSM Parameter Store is free for the above use case 🕺🏻
+![SSM Parameter Store](./ssm-cfn-share-res.png)
+
+And BTW did I tell you that SSM Parameter Store is [free](https://aws.amazon.com/systems-manager/pricing/) for all the above use cases 🙅🏻
 
 ## Conclusion
 
-SSM Parameter Store is a very useful AWS service that can be used in so many different ways and solves a lot of problems. I highly recommend trying it out. You can also reach out to me at my [twitter](https://twitter.com/tusharf5) if you have any questions related to this.
+SSM Parameter Store is one of my favourites AWS service that can be used in so many different ways to solve a lot of problems. I highly recommend trying it out. You can also reach out to me at my [twitter](https://twitter.com/tusharf5) if you have any questions related to this.
 
 Thanks for reading.
