@@ -117,10 +117,9 @@ EC2 shell anymore. You don't have to **PREPARE your EC2 instances** to run your 
 This is also more secure than storing your secrets in the environment shell. Add IAM on top of this and it becomes
 even more secure.
 
-This was definitely a good starting point but it was far from a robust and scalable solution. The reason for that was
-that it required manual work not just to initially set it up but for updates as well. When any of our CFN stacks would create new resources, I would go to the SSM Parameter Store console and create all the required key-value pairs. Then I would copy those keys in our application codebase.
+This was definitely a good starting point but it required manual work not just to initially set it up but for updates as well. Whenever one of our CFN stacks would create a resource, I would go to the SSM Parameter Store console and create its key-value pair. Then I would copy that key in our application codebase.
 
-This process would be repeated every time CFN creates a new AWS resource that needed to be referred to in the application. Even worse, sometimes CFN would silently replace resources([instead of update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html)) thereby changing its ARN, URL, Name, ID, etc while the application code would still be referring to the old values stored in SSM Parameter Store until those values were updated.
+This process would be repeated every time CFN creates a AWS resources that needed to be accessed in our backend application. Even worse, sometimes CFN would silently replace resources([instead of update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html)) thereby changing its ARN, URL, Name, ID, etc while the application code would still be referring to the old values stored in SSM Parameter Store and we wouldn't even know until the application would break.
 
 ![SSM Parameters For A Better CloudFormation Experience](./probem-ssm.png)
 
@@ -200,7 +199,7 @@ Resources:
       Value: !Ref MyEmptyBucket
 ```
 
-So I added SSM Parameter Store entries for all of the resources in all of our CFN Stacks.
+So we added SSM Parameter Store entries for all of the resources in all of our CFN Stacks.
 
 ```yaml
 Resources:
