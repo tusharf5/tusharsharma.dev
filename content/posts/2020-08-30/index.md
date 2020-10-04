@@ -46,11 +46,11 @@ What do these servers need in order to do that?
 1. Queue URL (SQS Queue)
 2. Bucket Name (S3 Bucket)
 
-It would be a terrible idea to hard code these values in the codebase. These values should be provided to our application in a different process. There are multiple ways for doing that example making these values available in the EC2 shell environment either as a config file or environment variables.
+It would be a terrible idea to hard code these values in the codebase. These values should be provided to our application through a different process often times via a CI/CD pipeline. There are multiple ways for doing that for example making these values available in the EC2 shell environment either as a config file or as environment variables.
 
 ![SSM Parameters For A Better CloudFormation Experience](./approach-1.png)
 
-The code for that might look something like this.
+The code for accessing those variables from the EC2 shell might look something like this.
 
 ```js
 // pseudo-code
@@ -82,11 +82,11 @@ KEY - '/my_api/db_password'
 VALUE - 'password'
 ```
 
-Here's a picture of its Console interface. The **Name** column represents all the Keys in your account and region.
+Here's a picture of its console interface. The **Name** column represents all the Keys in your account and region.
 
 ![SSM Parameters For A Better CloudFormation Experience](./ssm-param-store.png)
 
-Instead of storing the secrets as environment variables, we use SSM Parameters. The Node app would call the SSM Parameter API to get all the required values before starting the server so it doesn't have to get these values again as long as it doesn't restart. The code looks like this.
+Instead of storing the secrets as environment variables, we use SSM Parameters. The Node app would call the SSM Parameter API to get all the required values before starting the server so it doesn't have to get these values again as long as it doesn't restart. See code below.
 
 ![SSM Parameters For A Better CloudFormation Experience](./approach-2.png)
 
@@ -109,8 +109,8 @@ const secrets = await loadSecrets();
 server.listen(8000);
 ```
 
-The benefit of storing your cloud secrets in the Parameter Store is that you don't have to store your secrets in the
-shell anymore. You don't have to **PREPARE your EC2 instances** to run your applications.
+The benefit of storing your cloud secrets in the Parameter Store is that you don't have to put them in the
+EC2 shell anymore. You don't have to **PREPARE your EC2 instances** to run your applications.
 
 > If you need to prepare your EC2 instances for running your applications you can consider using Docker.
 
@@ -120,13 +120,13 @@ even more secure.
 This was definitely a good starting point but it was far from a robust and scalable solution. The reason for that was
 that it required manual work not just to initially set it up but for updates as well. When any of our CFN stacks would create new resources, I would go to the SSM Parameter Store console and create all the required key-value pairs. Then I would copy those keys in our application codebase.
 
-This process would be repeated every time CFN creates a new AWS resource that we would need to be referred to in the application. Even worse, sometimes CFN would silently replace resources([instead of update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html)) thereby changing its ARN, URL, Name, ID, etc while the application code would still be referring to the old values stored in SSM Parameter Store until those values were updated.
+This process would be repeated every time CFN creates a new AWS resource that needed to be referred to in the application. Even worse, sometimes CFN would silently replace resources([instead of update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html)) thereby changing its ARN, URL, Name, ID, etc while the application code would still be referring to the old values stored in SSM Parameter Store until those values were updated.
 
 ![SSM Parameters For A Better CloudFormation Experience](./probem-ssm.png)
 
 This quickly became a bottleneck for our fast-paced development team. Every time someone would make a change in the CFN templates we would check if we need to update anything in the SSM Parameter Store. If yes, after updating the value in the store we would also have to restart the Node servers using that value.
 
-Why restarting the servers? We had to restart the servers because we used to load all the values from the store one time before starting the server so that while the server was running, it didn't have to download those values again. For the server to pick up new values from the store we would have to restart the server.
+Why restarting the servers? We had to restart the servers because we used to load all the values from the store in one go before starting the server so that while the server was running, it didn't have to download those values again. For the server to pick up new values from the store we would have to restart the server.
 
 ```js {9,10,14,21,29}
 import express from "express";
