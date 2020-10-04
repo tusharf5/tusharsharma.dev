@@ -26,11 +26,11 @@ One way to share resources between different stacks is using a CFN feature calle
 - You can't modify or remove an output value that is referenced by another stack.
 
 We were heavily using this feature across our stacks but very soon the
-inter-dependencies between different stacks started to grow and would frequently break the CI/CD pipeline which was still okay as there are valid reasons for the restrictions listed above but it's also not a very pleasant experience to deal with it.
+cross-stack dependencies started to grow which would frequently break the CI/CD pipeline which was still okay as there are valid reasons for the restrictions listed above but it's also not a very pleasant experience to deal with it.
 
 ![Stack](./stack-mesh.png)
 
-The Dependency graph between stacks is something that should be well thought about and planned before creating the stacks but it is also something that cannot be avoided. The major issue that we were facing was not even related to the inter-stack dependencies. But it was something related to how
+The resource dependencies between stacks is something that should be well planned before creating the stacks but it is also something that cannot be avoided. The major issue that we were facing was not even related to the cross-stack dependencies. But it was something related to how
 we were using the resources created by CFN in our applications.
 
 I'll explain it using an example. Let's say we have two Node API servers. Both make use of some AWS resources that are created by a CFN Stack.
@@ -112,7 +112,7 @@ server.listen(8000);
 The benefit of storing your cloud secrets in the Parameter Store is that you don't have to put them in the
 EC2 shell anymore. You don't have to **PREPARE your EC2 instances** to run your applications.
 
-> If you need to prepare your EC2 instances for running your applications you can consider using Docker.
+> If you need to configure your EC2 instances for running your applications you can also consider using Docker.
 
 This is also more secure than storing your secrets in the environment shell. Add IAM on top of this and it becomes
 even more secure.
@@ -162,18 +162,18 @@ app.listen(port, () => {
 });
 ```
 
-We had two problems to solve. The first was to automate updating the SSM Parameter store with newer values and the second was to be able to pick the updated values in the store without any downtime or restarting the servers.
+We had two problems to solve. The first was to automate updating the SSM Parameter Store with newer values and the second was to be able to pick the updated values in the store without any downtime or restarting the servers.
 
 ## Solution #1
 
-The first solution that we thought of was not very easy to set up and included a lot of components. Anytime CFN would update or replace a resource, we would listen for that event (CloudWatch + EventBridge) and invoke a lambda function to process those events. The lambda would essentially do two things.
+The first solution that we thought of was not very easy to set up as it included a lot of components. Anytime CFN would update or replace a resource, we would listen for that event (CloudWatch + EventBridge) and invoke a lambda function to process those events. The lambda would essentially do two things.
 
-First If an event (resource updated/deleted/created) requires us to update a value in the SSM parameter, Lambda would do that.
-Second is that if an application needs to be restarted in order to pick the updated value from the store, Lambda would restart that resource as well.
+First If an event (resource updated/deleted/created) requires us to update a value in the Parameter Store, Lambda would do that.
+Second is that if an application needs to be restarted in order to pick the updated value from the store, Lambda would restart that application as well.
 
 ## Solution #2
 
-The second solution was based on the fact that SSM Parameter and its key-value pairs are also an AWS resource so they can also be managed by CFN.
+The second solution was based on the fact that SSM Parameter and its key-value pairs are also AWS resources so they can be managed by CFN.
 
 So when we are creating, updating, or deleting resources through CFN, why not we also create, update or delete their corresponding
 SSM key-value pairs within the same template. See the template below.
@@ -268,12 +268,12 @@ Resources:
       Value: !Ref PublicSubnetTwo
 ```
 
-This solved our first problem. I knew that solving the second problem using Lambda would be complicated so I got rid of the problem itself 🤯.
+This solved our first problem. I knew that solving the second problem using Lambda would be complicated so we got rid of the problem itself 🤯.
 
 Earlier we would load all the configurations and secrets before starting the application so that while the app is running,
 it doesn't have to download those configs and secrets again and again. If the app is running and any config is updated, the app would not know that so we would have to restart the application so it gets the latest value from Param Store.
 
-To solve this issue we divided the configs & secrets into two groups. The values in the first group can change frequently and the values in the second group would rarely change. The values of the first group will be accessed from the Param Store in real-time i.e every time it needs to be accessed it is loaded from the Parameter Store via an API call.
+To solve this issue we divided the configs & secrets into two groups. The values in the first group can change frequently and the values in the second group would rarely change. The values of the first group will be accessed from the Parameter Store in real-time i.e every time it needs to be accessed it is loaded from the Parameter Store via an API call.
 
 ```js {13,14,17,25}
 import express from "express";
