@@ -381,6 +381,30 @@ Another benefit that we found out later is that you can also use SSM Parameter S
 
 ![SSM Parameter Store](./ssm-cfn-share-res.png)
 
+```yaml {10,11,21}
+## Importing resources created in other stacks 
+## using their SSM Parameter Keys
+Parameters:
+  MyEmptyBucket:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: my_app/s3/archive_bucket
+    Description: The archive bucket created by the storage stack
+  MainVPC:
+    Description: VpcId of the Network Stack
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/app_network/plain/resources/ec2/vpc_id"
+  PublicSubnetOne:
+    Description: Public Subnet One of the Network Stack
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/app_network/plain/resources/ec2/public_subnet_1_id"
+
+Resources:
+  MyEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref MainVPC
+```
+
 And BTW did I tell you that SSM Parameter Store is [free](https://aws.amazon.com/systems-manager/pricing/) for all the above use cases 🙅🏻
 
 ## Conclusion
