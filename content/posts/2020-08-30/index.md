@@ -350,7 +350,7 @@ app.get("/add_to_s3", async (req, res) => {
 });
 ```
 
-And we use the same keys when specifying these SSM Parameters in the CFN templates.
+And we use the same keys when creating these SSM Parameters in the CFN templates.
 
 ```yaml {15}
 Resources:
@@ -374,7 +374,7 @@ Resources:
       Value: !Ref MyEmptyBucket
 ```
 
-Whenever we want to add a new resource to our CFN Stack we create a new entry for it in the `paramStoreKeys` and use the same key
+Whenever we want to add a new resource to our CFN Stack we create a new entry for it in the `ssmKeys` and use the same key
 in the CFN template. By following this approach, it has become so much easier to access all of our AWS resources for various purposes like monitoring, api calls, etc across multiple projects.
 
 Another benefit that we found out later is that you can also use SSM Parameter Store keys to refer to resources across multiple stacks similar to the cross-stack reference feature but without any of its limitations. We've removed all of our stack `exports` and `imports` across all of our CFN stacks and replaced them with referencing resources via SSM Parameter Store.
