@@ -82,7 +82,7 @@ module.exports = {
         start_url: "/",
         background_color: "#2b2b2b",
         theme_color: "#2b2b2b",
-        display: "Tushar Sharma",
+        display: "browser",
         icon: "src/images/favicon.png"
       }
     },
