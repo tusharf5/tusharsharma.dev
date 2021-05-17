@@ -53,6 +53,10 @@ One reason is that it is older than EventBridge and the second is that because C
 
 One interesting thing about these two services is that you can also set up CloudTrail to send all events that it captures to EventBridge. All the events in EventBridge that are sent by CloudTrail have the value of the field `detail-type` set to `AWS API Call via CloudTrail`.
 
+Here's a diagram to illustrate the event flow in EventBridge.
+
+![EventBridge CloiudTrail](./event-structure.png)
+
 **So how do we set up CloudTrail to send events to EventBridge?**
 
 For that we need to create something called a Trail in the CloudTrail's dashboard or via CLI.
@@ -64,6 +68,8 @@ As the name suggests a Trail is a series of events that are recorded by CloudTra
 My suggestion is that if you are only interested in listening to a bunch of events and do not really care if those events are being saved to S3 by the Trail then you can configure the S3 bucket to use the cheapest storage type so your s3 storage cost gets reduced.
 
 A Trail can be set up for storing management events, data events or insights events. Management events are the cheapest to record. Check the pricing [here](https://aws.amazon.com/cloudtrail/pricing/).
+
+![create cloudtrail](./create-cloudtrail.png)
 
 For our use case, we were only interested in management events so we created a Trail that only stored that.
 
@@ -80,9 +86,41 @@ Now let's take an example. Let's say we want to execute a lambda function whenev
 
 You provide a name, the event pattern, and the action(target) to take. There are some other minor configurations but these 3 are the important ones.
 
+![create rule eventbridge](./create-rule-eventbridge.png)
+
+EventBridge supports the following targets as actions when a rule is matched. Take a look that the updated list [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html).
+
+- API destination
+- API Gateway
+- AWS Batch job queue
+- CloudWatch Logs group
+- CodeBuild project
+- CodePipeline
+- Amazon EC2 CreateSnapshot API call
+- Amazon EC2 RebootInstances API call
+- Amazon EC2 StopInstances API call
+- Amazon EC2 TerminateInstances API call
+- Amazon ECS tasks
+- Event bus in a different account or Region
+- Firehose delivery stream (Kinesis Data Firehose)
+- Inspector assessment template (Amazon Inspector)
+- Kinesis stream (Kinesis Data Streams)
+- AWS Lambda function
+- Amazon Redshift clusters (Data API statement execution)
+- SageMaker Pipeline
+- Amazon SNS topic
+- Amazon SQS queues (includes FIFO queues)
+- SSM Automation
+- SSM OpsItem
+- SSM Run Command
+
+Step Functions state machines
+
 The console provides a GUI to create your event pattern using some pre-defined options which or you can provide a JSON pattern for the event. See how to create event patterns [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html).
 
-For the EC2 event above, our event pattern would look like this. This event is being sent to EventBridge by the EC2 service itself so we don't have to set up a CloudTrail for this event. It would work out of the box.
+![definte pattern eventbridge](./definte-pattern-eventbridge.png)
+
+For the EC2 event, our event pattern would look like this. This event is being sent to EventBridge by the EC2 service itself so we don't have to set up a CloudTrail for this event. It would work out of the box.
 
 ```json
 {
@@ -95,6 +133,8 @@ For the EC2 event above, our event pattern would look like this. This event is b
 ```
 
 Now as soon as someone tries to stop or terminate the instance, The AWS EC2 service will send that event to the default EventBus in EventBridge, EventBridge will match it against all of our rules and if matched and it will invoke our lambda function with the details about the event.
+
+![select targets eventbridge](./select-targets-eventbridge.png)
 
 Now let's take another example where the service does not natively send an event to EventBridge which means we need to listen to that event using CloudTrail. **After setting up a Trail**, we create a rule to listen to anytime someone creates an S3 bucket.
 
