@@ -14,77 +14,75 @@ tags:
 excerpt: "We recently needed to run some custom logic whenever one of our SQS-Lambda integration was disabled. In fact, at times there are use cases when we need to take some action when something happens in our AWS account. Here's how we use EventBridge to do just that."
 ---
 
-From the moment you create an AWS Account, AWS starts to track all sorts of events happening in your account. Like
-when someone logs in, creates a VPC, see the list of EC2 instances, delete an s3 bucket, etc. The list of events
+An AWS account captures a lot of events. Like when someone logs in, creates a VPC, sees the list of EC2 instances, deletes an s3 bucket, etc. The list of events
 is endless which is not surprising when you consider the number of services it has.
 
-Even in a new account you can see the list of these events by going to the AWS CloudTrail's dashboard and then clicking on the Event History tab as seen in the image below.
+Even in a new account, you can see the list of a lot of these events by going to the AWS **CloudTrail's** dashboard and then clicking on the Event History tab as seen in the image below.
 
 ![CloudTrail Dashboard](./cloudtrail.png)
 
-Before we look at thow to listen to these events we first need to take a deeper look at these events.
+Before we look at how to listen to these events we first need to understand what events are and how they are created.
 
-There are three types of events available to us via CLoudTrail.
+There are three types of events available to us via **CloudTrail**.
 
 1. [Management Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html)
 2. [Data Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html)
 3. [Insights Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-insights-events-with-cloudtrail.html)
 
-> Management events provide visibility into management operations that are performed on resources in your AWS account. These are also known as control plane operations.
+> Management events provide visibility into management operations that are performed on resources in your AWS account. These are also known as control plane operations. - _From the AWS Docs_
 
-In other words, anytime a configuration change or an activity that happens in an AWS account it's most likely to be a Management Event.
+In other words, anytime a configuration change or activity is captured in an AWS account it's most likely to be a Management Event.
 
-> Data events provide visibility into the resource operations performed on or within a resource. These are also known as data plane operations. Data events are often high-volume activities.
+> Data events provide visibility into the resource operations performed on or within a resource. These are also known as data plane operations. Data events are often high-volume activities. - _From the AWS Docs_
 
-You can think of Data Events as events that captures data centric operations like uploading something to an S3 bucket, payload for lambda invocations, dynamodb calls that modifes data.
+You can think of Data Events as events that capture data-centric operations like uploading something to an S3 bucket, payload for lambda invocations, DynamoDB calls that modifies data.
 
-For our use case we wanted to listen whenever our SQS-Lambda Integration was disabled. This is a configuration change which means that the event for that is a management event.
+For our use case, we wanted to be notified whenever one of our **SQS-Lambda** Integration was disabled. This is a configuration change which means that the event for that would be a management event.
 
-CloudTrail is not the only service that has to do with Events from different services. There is another service called
-EventBridge (used to be called CloudWatch Events).
+CloudTrail is not the only service that deals with events in an AWS account. There is another service called **EventBridge** (used to be called CloudWatch Events).
 
-We won't go into details of how EventBridge works but at a high level, it has something called as an event bus which are like conveyor belts in a factory. When you create a new AWS account, it comes with a pre-installed conveyor belt i.e an event bus. A lot of the AWS services sends events to EventBridge in the default event bus.You can take a look that full list [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html).
+I won't go into details of how EventBridge works but at a high level, it has a component which is called an **EventBus** which is similar to a conveyor belt in a factory. When you create a new AWS account, it comes with a pre-installed conveyor belt i.e a default EventBus. Now a lot of AWS services send events to EventBridge via the default EventBus. You can take a look at the full list [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html).
 
-So now we know that CloudTrail records three different types of events and EventBridge also recevies events from some AWS
-services. It is possible that an event is recorded by both. For instance when you shut down an EC2 Instance that event is recorded by CloudTrail and EC2 service also sends that event natively to EventBridge.
+So now we know that CloudTrail records three types of events and EventBridge also receives events from some AWS services. Note that an event may be recorded by both the services. For example, when you shut down an EC2 instance, that event is recorded by CloudTrail, and EC2 service also sends that event natively to EventBridge.
 
-The cool thing about EventBridge is that we can add rules to it when we are interested in listening to some event emitted
-by an AWS service. So for example we can add a rule to send a notification to us whenever someone creates a new EC2 instance or when someone creates a S3 bucket.
-
-The first thing to do when you are interested in listening to an event in an AWS account is figure out whether that event
-is being [sent to EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html) natively by that service or not.
-
-If yes, then you can skip setting up CloudTrail and directly configure EventBridge to start listening to that event.
-
-If not, then first you have to check [here](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-aws-service-specific-topics.html#cloudtrail-aws-service-specific-topics-list) that whether CloudTrail records that event or not. There are very high chances that CloudTrail will have support for recording the event you are interested in.
+CloudTrail supports much more events than the events that are sent by AWS services to EventBridge.
 
 **But how does CloudTrail supports so many events?**
 
-One reason is because it is older than EventBridge and the second is that because CloudTrail records API calls to our account whether they are being made by us or by AWS itself. That's how it is able to record a lot of events because most
-of the events are a result of an API call being made to our AWS account. It can also send these events that it captures to EventBridge.
+One reason is that it is older than EventBridge and the second is that because CloudTrail records API calls to our account whether they are being made by us or by AWS itself. That's how it can record a lot of events because most of the events are a result of an API call being made to our AWS account.
 
-Now that we know we know that our event is supported by CloudTrail via an API call. You need to set up a Trail.
+One interesting thing about these two services is that you can also set up CloudTrail to send all events that it captures to EventBridge. All the events in EventBridge that are sent by CloudTrail have the value of the field `detail-type` set to `AWS API Call via CloudTrail`.
 
-_This was the thing that I spent the most time struggling with. I though just because CloudTrail is showing an event is the Event History tab, it means it will also send that event to EventBridge. But that is not true, for most of the events you need to set up a Trail first before CloudTrail will send that event to EventBridge._
+**So how do we set up CloudTrail to send events to EventBridge?**
 
-As the name suggests a Trail is basically a series of events that are recorded by CloudTrail and saved on an S3 bucket.
-You can view the S3 bucket to see the list of all the past events that were recorded by CloudTrail.
+For, that we need to create something called a Trail in CloudTrail.
+
+_This was the thing that I spent the most time struggling with. I thought just because CloudTrail is showing an event in the Event History tab, it means it will also send that event to EventBridge. But that is not true, for most of the events you need to set up a Trail first before CloudTrail will send that event to EventBridge._
+
+As the name suggests a Trail is a series of events that are recorded by CloudTrail and saved on an S3 bucket. You can view the S3 bucket to see the list of all the past events that were recorded by CloudTrail.
 
 My suggestion is that if you are only interested in listening to some events and do not care about those events being saved on S3 by the Trail then you can configure the S3 bucket to use the cheapest storage type so your s3 storage cost gets reduced.
 
-A Trail can be set up for storing management events, data events or Insights events. Management events are the cheapest. Basically free but data events comes with a cost. Check the pricing [here](https://aws.amazon.com/cloudtrail/pricing/).
+A Trail can be set up for storing management events, data events or insights events. Management events are the cheapest. But data events come with a cost. Check the pricing [here](https://aws.amazon.com/cloudtrail/pricing/).
 
-For our use case, we were only interested in Management Events so we created a Trail which only stored Management Events.
+For our use case, we were only interested in Management Events so we created a Trail that only stored Management Events.
 
-Now let's take an example. Let's say we want to execute a lambda function whenever someone stops or terminates any EC2 instance in our AWS account. Let's open the EventBridge console and click on Create Rule.
+So now we know a little about events let's see how we listen to these events. We do that by adding a **Rule** to EventBridge. For example, we can add a rule to send a notification to us (via a Lambda Function or SNS topic) whenever someone creates a new EC2 instance or when someone creates an S3 bucket.
 
-You provide a name, the event pattern and the action to take. There are some other minor configuration but these 3 are
-the important ones.
+The first thing to do when you are interested in listening to an event in an AWS account is figuring out whether that event
+is being sent to EventBridge natively by the service or not. You can check that [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html).
 
-The console provide a GUI to create your event pattern using some pre-defined options which or you can provide a json pattern for the event. See how to create event patterns [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html).
+If yes, then you can skip setting up CloudTrail and directly configure EventBridge to start listening to that event.
 
-For the EC2 event above, our event pattern would look like this. This event is being send to EventBridge by the EC2 service
-itslef so we don't have to set up a CloudTrail for this event. It would work out of the box.
+If not, then first you have to check [here](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-aws-service-specific-topics.html#cloudtrail-aws-service-specific-topics-list) that whether CloudTrail records that event or not. There are very high chances that CloudTrail will have support to capture the event you are interested in.
+
+Now let's take an example. Let's say we want to execute a lambda function whenever someone stops or terminates any EC2 instance in our AWS account. Let's open the EventBridge console and click on **Create Rule**.
+
+You provide a name, the event pattern, and the action to take. There are some other minor configurations but these 3 are the important ones.
+
+The console provides a GUI to create your event pattern using some pre-defined options which or you can provide a JSON pattern for the event. See how to create event patterns [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html).
+
+For the EC2 event above, our event pattern would look like this. This event is being sent to EventBridge by the EC2 service itself so we don't have to set up a CloudTrail for this event. It would work out of the box.
 
 ```json
 {
@@ -96,13 +94,11 @@ itslef so we don't have to set up a CloudTrail for this event. It would work out
 }
 ```
 
-Now as soon as someone tries to stop or terminate the instance, AWS EC2 service will send that event to the default
-event bus in EventBridge, EventBridge will know that we have a rule setup to match that event and it will thus invoke our
-lambda function with the details about the event.
+Now as soon as someone tries to stop or terminate the instance, The AWS EC2 service will send that event to the default EventBus in EventBridge, EventBridge will match it against our rules and if matched and it will invoke our lambda function with the details about the event.
 
-Now let's take another example where the service does not natively send an event to EventBridge which means we need to listen to that event using CloudTrail. Let's create a rule to listen to anytime someone creates a S3 bucket.
+Now let's take another example where the service does not natively send an event to EventBridge which means we need to listen to that event using CloudTrail. After setting up a Trail, we create a rule to listen to anytime someone creates an S3 bucket.
 
-This is how the the event pattern would look like.
+This is how the event pattern would look like.
 
 ```json
 {
@@ -130,5 +126,8 @@ If you're curious to know what the event pattern for our use case was. Here's it
 
 Did you notice the _AWS API Call via CloudTrail_? This tells that this event is being provided by CloudTrail.
 
-What's so powerful about this is that it EventBridge and CloudTrail are both serverless offerings from AWS so you only
-pay for what you use. Also EventBridge supports lots of AWS services as actions to when a rule is matched.
+Now we can listen to these events using a complete serverless set up so we only pay for what we use.
+
+There are other ways to listen to events in an AWS account but this seems to be my go-to way of doing it. I hope you liked the article.
+
+Thank you for reading.
