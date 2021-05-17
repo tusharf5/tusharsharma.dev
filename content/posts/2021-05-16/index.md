@@ -1,6 +1,6 @@
 ---
 uid: "aws-services-events"
-title: "Listen To Events By AWS Services"
+title: "Listening To Events By AWS Services"
 category: "AWS"
 draft: false
 tags:
