@@ -55,19 +55,19 @@ One interesting thing about these two services is that you can also set up Cloud
 
 **So how do we set up CloudTrail to send events to EventBridge?**
 
-For, that we need to create something called a Trail in CloudTrail.
+For that we need to create something called a Trail in the CloudTrail's dashboard or via CLI.
 
 _This was the thing that I spent the most time struggling with. I thought just because CloudTrail is showing an event in the Event History tab, it means it will also send that event to EventBridge. But that is not true, for most of the events you need to set up a Trail first before CloudTrail will send that event to EventBridge._
 
 As the name suggests a Trail is a series of events that are recorded by CloudTrail and saved on an S3 bucket. You can view the S3 bucket to see the list of all the past events that were recorded by CloudTrail.
 
-My suggestion is that if you are only interested in listening to some events and do not care about those events being saved on S3 by the Trail then you can configure the S3 bucket to use the cheapest storage type so your s3 storage cost gets reduced.
+My suggestion is that if you are only interested in listening to a bunch of events and do not really care if those events are being saved to S3 by the Trail then you can configure the S3 bucket to use the cheapest storage type so your s3 storage cost gets reduced.
 
-A Trail can be set up for storing management events, data events or insights events. Management events are the cheapest. But data events come with a cost. Check the pricing [here](https://aws.amazon.com/cloudtrail/pricing/).
+A Trail can be set up for storing management events, data events or insights events. Management events are the cheapest to record. Check the pricing [here](https://aws.amazon.com/cloudtrail/pricing/).
 
-For our use case, we were only interested in Management Events so we created a Trail that only stored Management Events.
+For our use case, we were only interested in management events so we created a Trail that only stored that.
 
-So now we know a little about events let's see how we listen to these events. We do that by adding a **Rule** to EventBridge. For example, we can add a rule to send a notification to us (via a Lambda Function or SNS topic) whenever someone creates a new EC2 instance or when someone creates an S3 bucket.
+So now we know a little about events let's see how can we listen to these events. We do that by adding a **Rule** to EventBridge. For example, we can add a rule to send a notification to us (via a Lambda Function or SNS topic) whenever someone creates a new EC2 instance or when someone creates an S3 bucket.
 
 The first thing to do when you are interested in listening to an event in an AWS account is figuring out whether that event
 is being sent to EventBridge natively by the service or not. You can check that [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event.html).
@@ -78,7 +78,7 @@ If not, then first you have to check [here](https://docs.aws.amazon.com/awscloud
 
 Now let's take an example. Let's say we want to execute a lambda function whenever someone stops or terminates any EC2 instance in our AWS account. Let's open the EventBridge console and click on **Create Rule**.
 
-You provide a name, the event pattern, and the action to take. There are some other minor configurations but these 3 are the important ones.
+You provide a name, the event pattern, and the action(target) to take. There are some other minor configurations but these 3 are the important ones.
 
 The console provides a GUI to create your event pattern using some pre-defined options which or you can provide a JSON pattern for the event. See how to create event patterns [here](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html).
 
@@ -94,13 +94,13 @@ For the EC2 event above, our event pattern would look like this. This event is b
 }
 ```
 
-Now as soon as someone tries to stop or terminate the instance, The AWS EC2 service will send that event to the default EventBus in EventBridge, EventBridge will match it against our rules and if matched and it will invoke our lambda function with the details about the event.
+Now as soon as someone tries to stop or terminate the instance, The AWS EC2 service will send that event to the default EventBus in EventBridge, EventBridge will match it against all of our rules and if matched and it will invoke our lambda function with the details about the event.
 
-Now let's take another example where the service does not natively send an event to EventBridge which means we need to listen to that event using CloudTrail. After setting up a Trail, we create a rule to listen to anytime someone creates an S3 bucket.
+Now let's take another example where the service does not natively send an event to EventBridge which means we need to listen to that event using CloudTrail. **After setting up a Trail**, we create a rule to listen to anytime someone creates an S3 bucket.
 
 This is how the event pattern would look like.
 
-```json
+```json 2
 {
   "source": ["aws.s3"],
   "detail-type": ["AWS API Call via CloudTrail"],
@@ -113,7 +113,7 @@ This is how the event pattern would look like.
 
 If you're curious to know what the event pattern for our use case was. Here's it.
 
-```json
+```json 2
 {
   "source": ["aws.lambda"],
   "detail-type": ["AWS API Call via CloudTrail"],
@@ -126,8 +126,6 @@ If you're curious to know what the event pattern for our use case was. Here's it
 
 Did you notice the _AWS API Call via CloudTrail_? This tells that this event is being provided by CloudTrail.
 
-Now we can listen to these events using a complete serverless set up so we only pay for what we use.
-
-There are other ways to listen to events in an AWS account but this seems to be my go-to way of doing it. I hope you liked the article.
+The great thing about the above setup is that it is completely serverless so we only pay for what we use. There are other ways to listen to events in an AWS account but this seems to be my new go-to way of doing it.
 
 Thank you for reading.
