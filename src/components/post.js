@@ -11,6 +11,7 @@ const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
   return (
     <Layout>
       <Seo
+        scripts={["https://platform.twitter.com/widgets.js"]}
         title={mdx.frontmatter.title}
         description={mdx.frontmatter.excerpt}
         keywords={[...mdx.frontmatter.tags, mdx.frontmatter.category]}

@@ -119,24 +119,16 @@ export default function PostFooter({ title, url, postId }) {
       </div>
       <div className="social-share">
         <div className="line"></div>
-        <span>Share article</span>
         <div className="links">
-          <div
-            onClick={() => shareOntwitter({ title, url })}
-            aria-label="twitter"
-            role="button"
-            tabIndex="0"
+          <a
+
+            href="https://twitter.com/tusharf5?ref_src=twsrc%5Etfw"
+            class="twitter-follow-button"
+            data-show-count="true"
+            data-dnt="true"
           >
-            Twitter
-          </div>
-          <div
-            onClick={() => shareOnFB({ title, url })}
-            aria-label="facebook"
-            role="button"
-            tabIndex="0"
-          >
-            Facebook
-          </div>
+            Follow
+          </a>
         </div>
       </div>
     </footer>

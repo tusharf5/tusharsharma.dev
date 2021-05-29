@@ -85,7 +85,7 @@
     overflow: hidden;
     .line {
       background-color: var(--footer-color);
-      min-width: 60%;
+      min-width: 70%;
       height: 1px;
       margin-right: 8px;
       opacity: 0.2;
@@ -96,7 +96,7 @@
       }
     }
     > span {
-      text-transform: uppercase;
+      // text-transform: uppercase;
       margin-right: 8px;
       font-size: 0.8em;
     }

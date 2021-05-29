@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
 
-function SEO({ description, lang, meta, keywords = [], title }) {
+function SEO({ description, lang, meta, keywords = [], title, scripts = [] }) {
   return (
     <StaticQuery
       query={detailsQuery}
-      render={data => {
+      render={(data) => {
         const metaDescription =
           description || data.site.siteMetadata.description;
         const allKeywords = keywords.concat(data.site.siteMetadata.keywords);
         return (
           <Helmet
             htmlAttributes={{
-              lang
+              lang,
             }}
             title={`${title ? title + " | " : ""}${
               data.site.siteMetadata.title
@@ -22,42 +22,42 @@ function SEO({ description, lang, meta, keywords = [], title }) {
             meta={[
               {
                 name: `description`,
-                content: metaDescription
+                content: metaDescription,
               },
               {
                 property: `og:title`,
-                content: title
+                content: title,
               },
               {
                 property: `og:description`,
-                content: metaDescription
+                content: metaDescription,
               },
               {
                 property: `og:type`,
-                content: `website`
+                content: `website`,
               },
               {
                 name: `twitter:card`,
-                content: `summary`
+                content: `summary`,
               },
               {
                 name: `twitter:creator`,
-                content: data.site.siteMetadata.author
+                content: data.site.siteMetadata.author,
               },
               {
                 name: `twitter:title`,
-                content: title
+                content: title,
               },
               {
                 name: `twitter:description`,
-                content: metaDescription
-              }
+                content: metaDescription,
+              },
             ]
               .concat(
                 allKeywords.length > 0
                   ? {
                       name: `keywords`,
-                      content: allKeywords.join(`, `)
+                      content: allKeywords.join(`, `),
                     }
                   : []
               )
@@ -69,6 +69,11 @@ function SEO({ description, lang, meta, keywords = [], title }) {
                 src="https://www.googletagmanager.com/gtag/js?id=UA-124607330-1"
               />
             )}
+            {scripts.length > 0
+              ? scripts.forEach((url) => (
+                  <script async src={url} charset="utf-8"></script>
+                ))
+              : null}
             {process.env.NODE_ENV === "production" && (
               <script>
                 {`
@@ -100,7 +105,7 @@ function SEO({ description, lang, meta, keywords = [], title }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  keywords: []
+  keywords: [],
 };
 
 SEO.propTypes = {
@@ -108,7 +113,7 @@ SEO.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.array,
   keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default SEO;
