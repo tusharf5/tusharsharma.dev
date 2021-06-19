@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
@@ -8,10 +8,15 @@ import Header from "./header";
 import PostFooter from "./post-footer";
 
 const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
+  useEffect(() => {
+    if (typeof window.twttr !== "undefined") {
+      window.twttr.widgets.load();
+    }
+  }, []);
   return (
     <Layout>
       <Seo
-        scripts={["https://platform.twitter.com/widgets.js"]}
+        scripts={[]}
         title={mdx.frontmatter.title}
         description={mdx.frontmatter.excerpt}
         keywords={[...mdx.frontmatter.tags, mdx.frontmatter.category]}

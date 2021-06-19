@@ -123,7 +123,7 @@ export default function PostFooter({ title, url, postId }) {
           <a
 
             href="https://twitter.com/tusharf5?ref_src=twsrc%5Etfw"
-            class="twitter-follow-button"
+            className="twitter-follow-button"
             data-show-count="true"
             data-dnt="true"
           >
