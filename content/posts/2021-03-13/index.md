@@ -9,7 +9,7 @@ tags:
   - kadane-algorithm
   - maximum-repeating-substring
   - maximum-sum-subarray
-excerpt: "Making sense of the implementation of Kadane's algorithm which is one of my favorite algorithms."
+excerpt: "Explanation and implementation of Kadane's algorithm which is one of my favorite algorithms."
 ---
 
 I like learning about and at least try to solve data structures and algorithm problems. One such family of problems that many of us have probably come across is the **maximum subarray** problems.
