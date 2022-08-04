@@ -10,7 +10,7 @@ tags:
   - type safe
   - typescript retry
   - design pattern
-excerpt: "Make any functional call retryable using this fully type safe utility retry function."
+excerpt: "A fully type-safe utility function to retry the function execution on failure."
 ---
 
 “Everything fails, all the time” - Werner Vogels, Amazon CTO

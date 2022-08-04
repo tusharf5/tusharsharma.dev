@@ -10,7 +10,9 @@ import PostFooter from "./post-footer";
 const Post = ({ data: { mdx }, pageContext: { id, next, prev } }) => {
   useEffect(() => {
     if (typeof window.twttr !== "undefined") {
-      window.twttr.widgets.load();
+      try {
+        window.twttr.widgets.load();
+      } catch {}
     }
   }, []);
   return (
