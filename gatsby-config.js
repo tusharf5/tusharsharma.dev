@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: "Tushar Sharma",
-    siteUrl: "https://tusharsharma.dev",
+    siteUrl: "https://tusharf5.com",
     description:
       "Director of Engineering @Gerald. Passionate about web technologies and cloud security",
     author: "Tushar Sharma",
@@ -19,8 +19,8 @@ module.exports = {
       "Programming",
       "Coding",
       "HTML",
-      "CSS"
-    ]
+      "CSS",
+    ],
   },
   plugins: [
     "gatsby-plugin-sass",
@@ -31,15 +31,15 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "images",
-        path: `${__dirname}/src/images`
-      }
+        path: `${__dirname}/src/images`,
+      },
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "posts",
-        path: `${__dirname}/content/posts`
-      }
+        path: `${__dirname}/content/posts`,
+      },
     },
     {
       resolve: "gatsby-plugin-mdx",
@@ -51,8 +51,8 @@ module.exports = {
             resolve: "gatsby-remark-external-links",
             options: {
               target: "_blank",
-              rel: "nofollow noopener noreferrer"
-            }
+              rel: "nofollow noopener noreferrer",
+            },
           },
           {
             resolve: "gatsby-remark-images",
@@ -60,32 +60,32 @@ module.exports = {
               maxWidth: 830,
               linkImagesToOriginal: false,
               quality: 90,
-              withWebp: true
-            }
+              withWebp: true,
+            },
           },
           {
             resolve: "gatsby-remark-autolink-headers",
             options: {
-              maintainCase: false
-            }
-          }
-        ]
-      }
+              maintainCase: false,
+            },
+          },
+        ],
+      },
     },
     "gatsby-plugin-catch-links",
     "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "tusharsharma.dev",
+        name: "tusharf5.com",
         short_name: "Tushar",
         start_url: "/",
         background_color: "#2b2b2b",
         theme_color: "#2b2b2b",
         display: "browser",
-        icon: "src/images/favicon.png"
-      }
+        icon: "src/images/favicon.png",
+      },
     },
-    `gatsby-plugin-netlify`
-  ]
+    `gatsby-plugin-netlify`,
+  ],
 };

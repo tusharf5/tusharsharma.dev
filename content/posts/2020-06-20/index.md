@@ -1,14 +1,14 @@
 ---
-uid: 'react-hooks-mental-model'
-title: 'Re-visiting React Hooks - useEffect'
-category: 'REACT'
+uid: "react-hooks-mental-model"
+title: "Re-visiting React Hooks - useEffect"
+category: "REACT"
 draft: false
 tags:
   - react
   - hooks
   - react hooks
   - useEffect
-excerpt: 'A little late but writing my thoughts on why React Hooks are great and especially the useEffect Hook.'
+excerpt: "A little late but writing my thoughts on why React Hooks are great and especially the useEffect Hook."
 ---
 
 With the addition of [Hooks](https://reactjs.org/docs/hooks-intro.html) in React, developers could use a lot of react features that were only available through class components in function components also. React hooks don't directly bring anything new to react. It provides an API to use features like local state, component lifecycle, etc in function components. So why use hooks in function components if you can do pretty much everything using class components? Let's see.
@@ -18,10 +18,9 @@ With the addition of [Hooks](https://reactjs.org/docs/hooks-intro.html) in React
 Class components require more boilerplate than function components. Take a look at this very simple class component.
 
 ```jsx
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export class BaseComponent extends Component {
-
   constructor(props) {
     super(props);
   }
@@ -35,7 +34,7 @@ export class BaseComponent extends Component {
 Compare it with the function component below which requires much less code.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 export function BaseComponent() {
   return <div>Hello</div>;
@@ -60,26 +59,25 @@ This is not the case with function components where each render gets its own uni
 
 ```jsx
 class MyComponent extends React.Component {
+  async onClick() {
+    // execution starts on a click
+    // at this point let's assume value of this.state.count is 0
+    this.setState({ count: this.state.count + 1 });
+    // the function execution is paused and will continue once the server responds back
+    await increaseCountInServer(this.state.count + 1);
+    // the server responds back so the execution is resumed from here
+    // at this point this.state.count could have a different value
+    // if this button was clicked multiple times
+    this.props.onChange(this.state.count + 1);
+  }
 
- async onClick() {
-   // execution starts on a click
-   // at this point let's assume value of this.state.count is 0
-   this.setState({ count: this.state.count + 1 })
-   // the function execution is paused and will continue once the server responds back
-   await increaseCountInServer(this.state.count + 1);
-   // the server responds back so the execution is resumed from here
-   // at this point this.state.count could have a different value 
-   // if this button was clicked multiple times
-   this.props.onChange(this.state.count + 1);
- }
-
- render() {
-  return <button onClick={this.onClick}>{this.count}</button>;
- }
+  render() {
+    return <button onClick={this.onClick}>{this.count}</button>;
+  }
 }
 ```
 
-The below image depicts this issue with some visuals. See the digram flow in this order *1 -> 2 -> 3 -> 4 -> 5 -> 6* which is how Javascript will execute the above React code on multiple clicks. (Open in a new window to zoom in)
+The below image depicts this issue with some visuals. See the digram flow in this order _1 -> 2 -> 3 -> 4 -> 5 -> 6_ which is how Javascript will execute the above React code on multiple clicks. (Open in a new window to zoom in)
 
 ![React Class this value](./react-class-this-issue.png)
 
@@ -89,22 +87,21 @@ A quick way to solve this issue in class components is to destructure the `this`
 
 ```jsx
 class MyComponent extends React.Component {
+  async onClick() {
+    const { count } = this.state;
+    // execution starts on a click
+    // at this point let's assume value of count is 0
+    this.setState({ count: count + 1 });
+    // the function execution is paused and will continue once the server responds back
+    await increaseCountInServer(count + 1);
+    // the server responds back so the execution is resumed from here
+    // at this point count is still 0
+    this.props.onChange(count + 1);
+  }
 
- async onClick() {
-   const { count } = this.state;
-   // execution starts on a click
-   // at this point let's assume value of count is 0
-   this.setState({ count: count + 1 })
-   // the function execution is paused and will continue once the server responds back
-   await increaseCountInServer(count + 1);
-   // the server responds back so the execution is resumed from here
-   // at this point count is still 0
-   this.props.onChange(count + 1);
- }
-
- render() {
-  return <button onClick={this.onClick}>{this.count}</button>;
- }
+  render() {
+    return <button onClick={this.onClick}>{this.count}</button>;
+  }
 }
 ```
 
@@ -221,4 +218,4 @@ During the lifetime of this component, `useEffect` will only perform cleanup for
 
 ## Conclusion
 
-I think `useEffect` API is much more intuitive than options available in a class component. You just have to start thinking in terms of side-effects and when to run these side-effects. Thank you for reading this article. If you want to make any changes please submit a PR [here](https://github.com/tusharf5/tusharsharma.dev).
+I think `useEffect` API is much more intuitive than options available in a class component. You just have to start thinking in terms of side-effects and when to run these side-effects. Thank you for reading this article. If you want to make any changes please submit a PR [here](https://github.com/tusharf5/tusharf5.com).

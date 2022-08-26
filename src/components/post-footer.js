@@ -8,7 +8,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { UUID } from "../utils/constants";
 
 function shareOnFB({ title, url }) {
-  const fullUrl = encodeURI(`https://tusharsharma.dev${url}`);
+  const fullUrl = encodeURI(`https://tusharf5.com${url}`);
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${fullUrl}&t=${title}`;
   typeof window !== "undefined" &&
     window.open(
@@ -20,7 +20,7 @@ function shareOnFB({ title, url }) {
 }
 
 function shareOntwitter({ title, url }) {
-  const fullUrl = encodeURI(`https://tusharsharma.dev${url}`);
+  const fullUrl = encodeURI(`https://tusharf5.com${url}`);
   const tweetUrl = `https://twitter.com/intent/tweet?url=${fullUrl}&via=tusharf5&text=${title}`;
   typeof window !== "undefined" &&
     window.open(
@@ -121,7 +121,6 @@ export default function PostFooter({ title, url, postId }) {
         <div className="line"></div>
         <div className="links">
           <a
-
             href="https://twitter.com/tusharf5?ref_src=twsrc%5Etfw"
             className="twitter-follow-button"
             data-show-count="true"

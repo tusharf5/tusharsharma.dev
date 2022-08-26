@@ -47,7 +47,7 @@ I live by this quote, so it naturally comes to my coding style as well. Things f
 
 ## The Implementation
 
-Let’s talk about the actual retry function implementation. This was not the first time we were making an API call that could use a retry mechanism. After all, most of the backend services are a bunch of API calls with some data transformation. So I wanted to write a utility function that can automatically retry any function on failure. I’ve written about such an implementation in JS. You can check that [here](https://tusharsharma.dev/posts/retry-design-pattern-with-js-promises).
+Let’s talk about the actual retry function implementation. This was not the first time we were making an API call that could use a retry mechanism. After all, most of the backend services are a bunch of API calls with some data transformation. So I wanted to write a utility function that can automatically retry any function on failure. I’ve written about such an implementation in JS. You can check that [here](https://tusharf5.com/posts/retry-design-pattern-with-js-promises).
 
 Typescript is awesome but what good is a typescript code that doesn’t give you full type safety.
 
@@ -197,10 +197,10 @@ Finally the `Awaited` Type. The [Awaited](https://www.typescriptlang.org/docs/ha
 
 ```ts
 // T is of type string
-type T = Awaited<Promise<string>>
+type T = Awaited<Promise<string>>;
 
 // T is of type number
-type T = Awaited<Promise<Promise<number>>>
+type T = Awaited<Promise<Promise<number>>>;
 ```
 
 The great thing about `Awaited` is that it recursively tries to extract the type of the finally resolved value so if your promise is returning another promise which returns another promise, it will return the innermost promise's resolved value type as shown in the 2nd example above.

@@ -1,4 +1,4 @@
-# tusharsharma.dev
+# tusharf5.com
 
 ## 🧐 What's inside?
 
