@@ -194,7 +194,7 @@ This command will push the new changes to the latest commit without creating a n
 
 If we want to know who most recently modified some particular line in a file. We can use the git blame command.
 
-`git blame <filename>`
+`git blame \<filename>`
 
 and it will show a list of commits like this
 
@@ -219,13 +219,13 @@ This command will remove the latest commit on your local branch but it will keep
 
 To remove the changes also use the `--hard` flag with reset.
 
-`git reset --hard <commitID>`
+`git reset --hard \<commitID>`
 
 This command will wipe out all the commits up until the commit id provided and brings the **HEAD** to this commit id.
 
 ## Undo A Commit
 
-`git revert <commitId>`
+`git revert \<commitId>`
 
 This command will undo all the changes stored in the provided commit id and make a new commit of those changes.
 So if you added 4 new lines in your file in a commit and you rever that commit. Git will remove those 4 lines in a new commit.

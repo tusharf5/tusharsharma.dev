@@ -1,14 +1,14 @@
 ---
-uid: "deep-dive-how-does-ssh-really-work"
-title: "Deep Dive - How Does SSH Really Work?"
-category: "Devbits"
+uid: 'deep-dive-how-does-ssh-really-work'
+title: 'Deep Dive - How Does SSH Really Work?'
+category: 'Devbits'
 draft: false
 tags:
   - ssh
   - public key encryption
   - symmetric encryption
   - asymmetric encryption
-excerpt: "SSH makes accessing remote servers super easy and secure. But how it does that is the real interesting part."
+excerpt: 'SSH makes accessing remote servers super easy and secure. But how it does that is the real interesting part.'
 ---
 
 ![SSH Internals and How It Works](./ssh.png)

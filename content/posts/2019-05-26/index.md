@@ -118,12 +118,12 @@ function runGenerator(gen) {
       return;
     }
     iterObject.value
-      .then(data => {
+      .then((data) => {
         console.log('sync resolved');
         const current = it.next(data);
         resolveNext(current);
       })
-      .catch(e => {
+      .catch((e) => {
         it.throw(e);
       });
   }

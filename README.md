@@ -43,6 +43,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 ## Add Notes
 
+<!--
 ```mdx
 <NoteBox type="danger" />
 
@@ -63,4 +64,4 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 <NoteBox type="primary" />
 
 > **Learning #3** - Add a lot of comments to your CFN templates. They will be helpful to you and to anyone who's new.
-```
+``` -->

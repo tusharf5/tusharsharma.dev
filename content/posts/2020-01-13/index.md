@@ -16,7 +16,7 @@ to building paginated APIs is somewhat misleading. In this post, I have shared m
 
 > A lot of the time, when you're making calls to a REST API, there'll be a lot of results to return. For that reason, we paginate the results to make sure responses are easier to handle. - [Atlassian Docs](https://developer.atlassian.com/server/confluence/pagination-in-the-rest-api/)
 
-Fetching a list of users, movies, contacts, etc are all examples where we fetch data using REST APIs. Based on the size of the data,  these APIs are generally **paginated**. Before we dive in, let's go through an example of a **paginated** REST API to better understand what pagination is? and Why it exists in the first place?. 
+Fetching a list of users, movies, contacts, etc are all examples where we fetch data using REST APIs. Based on the size of the data, these APIs are generally **paginated**. Before we dive in, let's go through an example of a **paginated** REST API to better understand what pagination is? and Why it exists in the first place?.
 
 If you are already familiar with it you can skip to [this](#offset-pagination) section which talks about different approaches to do pagination.
 
@@ -63,20 +63,11 @@ Now when we know what pagination is, let's see how do we implement it.
 A very common approach to add pagination support to an existing API is using the `skip` and `limit` database operator. This is how it can be done in MongoDB.
 
 ```js
-db.users
-  .find({})
-  .skip(0)
-  .limit(100); // 1 - returns users from 0 to 100
+db.users.find({}).skip(0).limit(100); // 1 - returns users from 0 to 100
 
-db.users
-  .find({})
-  .skip(100)
-  .limit(100); // 2 - returns users from 100 to 200
+db.users.find({}).skip(100).limit(100); // 2 - returns users from 100 to 200
 
-db.users
-  .find({})
-  .skip(200)
-  .limit(100); // 3 - returns users from 200 to 300
+db.users.find({}).skip(200).limit(100); // 3 - returns users from 200 to 300
 ```
 
 To determine the value of `skip` and `limit` database query options from `page` and `limit` request query parameters. We can use a similar logic as shown below.
@@ -92,15 +83,12 @@ if (isNaN(page)) {
 
 let skip = page * limit; // this will tell us how many records to skip to get to the desired subset(page) of user records.
 
-const users = await db.users
-  .find({})
-  .skip(skip)
-  .limit(limit);
+const users = await db.users.find({}).skip(skip).limit(limit);
 
 res.send({
   limit,
   page,
-  data: users
+  data: users,
 });
 ```
 
@@ -111,15 +99,12 @@ This is an easy to reason about implementation and I think that's why it's still
 Let's consider this query.
 
 ```js
-db.users
-  .find({})
-  .skip(0)
-  .limit(100);
+db.users.find({}).skip(0).limit(100);
 ```
 
 The database engine analyzes the query and concludes what it needs to do.
 
-- Fetch records from the storage without any condition. `find({})`
+- Fetch records from the storage without any condition. `find(\{})`
 - From the fetched records skip **0** records. `skip(0)`
 - Only return the **100** records back. `limit(100)`
 
@@ -128,15 +113,12 @@ When the above three conditions are combined the database makes an intelligent d
 Let's consider another query.
 
 ```js
-db.users
-  .find({})
-  .skip(500)
-  .limit(100);
+db.users.find({}).skip(500).limit(100);
 ```
 
 The database needs to
 
-- Fetch records from the storage without any condition. `find({})`
+- Fetch records from the storage without any condition. `find(\{})`
 - From the fetched records skip **500** records. `skip(500)`
 - Only return **100** records back. `limit(100)`
 
@@ -199,9 +181,7 @@ Again, to understand why this an efficient way we first must understand how it i
 ```js
 let { next_cursor = 1, limit = 100 } = req.params;
 
-const users = await db.users
-  .find({ _id: { $gte: next_cursor } })
-  .limit(limit + 1);
+const users = await db.users.find({ _id: { $gte: next_cursor } }).limit(limit + 1);
 
 const next_cursor = users[limit]._id; // _id of 101st user
 
@@ -210,17 +190,17 @@ users.length = limit; // removing the 101st user from the result
 res.send({
   data: users,
   limit,
-  next_cursor
+  next_cursor,
 });
 ```
 
 When the server receives this request `https://api.restorrent.com/v1/users` i.e without a `next_cursor` value. It defaults the value of `next_cursor` to **1**.
 
-The server sends out this database query `db.users.find({ _id: { $gte: 1 } }).limit(101);`
+The server sends out this database query `db.users.find(\{ _id: \{ $gte: 1 } }).limit(101);`
 
 The database analyzes the query and concludes what it needs to do.
 
-- Fetch records from the storage with a specific condition. `find({ _id: { $gte: 1 } })`
+- Fetch records from the storage with a specific condition. `find(\{ _id: \{ $gte: 1 } })`
 - Only return the **100** records back. `limit(101)`
 
 When the above two conditions are combined the database makes an intelligent decision of **only finding** 100 records that match the `find` criteria. Since the `_id_` field is indexed, the database first queries the index stored inside the RAM to directly access the node with record `_id` greater than or equal to **1** which is extremely fast since it is sorted. Then the database will fetch those matched records from the disk. In total, the database would only fetch **101** records from the disk.
@@ -229,11 +209,11 @@ Why 101? when we only required 100 records. The extra record outside of the limi
 
 To get the next set of users the API consumer must provide the `next_cursor` value, in the next request to the API server.
 
-So we send a request by calling the endpoint `https://api.restorrent.com/v1/users?next_cursor=101`. The server sends the database this query `db.users.find({ _id: { $gte: 101 } }).limit(101);`
+So we send a request by calling the endpoint `https://api.restorrent.com/v1/users?next_cursor=101`. The server sends the database this query `db.users.find(\{ _id: \{ $gte: 101 } }).limit(101);`
 
 The database analyzes the query and concludes what it needs to do.
 
-- Fetch records from the storage with a specific condition. `find({ _id: { $gte: 101 } })`
+- Fetch records from the storage with a specific condition. `find(\{ _id: \{ $gte: 101 } })`
 - Only return the **100** records back. `limit(101)`
 
 When the above two conditions are combined the database makes an intelligent decision of **only finding** 100 records that match the `find` criteria. Since the `_id_` field is indexed, the database first queries the index stored inside the RAM to directly access the node with record `_id` as **101** and then **100** subsequent nodes that will be next to it that are all greater than **101** as they are sorted. Then the database will fetch those records from the disk. In , the database would fetch **101** records from the disk.
@@ -247,9 +227,7 @@ let { next_cursor, limit = 100 } = req.params;
 
 next_cursor = decodeBase64(next_cursor);
 
-const users = await db.users
-  .find({ _id: { $gte: next_cursor } })
-  .limit(limit + 1);
+const users = await db.users.find({ _id: { $gte: next_cursor } }).limit(limit + 1);
 
 const next_cursor = encodeBase64(users[limit]._id); // _id of 101st user
 
@@ -258,7 +236,7 @@ users.length = limit; // removing the 101st user from the result
 res.send({
   data: users,
   limit,
-  next_cursor
+  next_cursor,
 });
 ```
 

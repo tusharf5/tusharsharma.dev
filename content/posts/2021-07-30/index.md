@@ -1,7 +1,7 @@
 ---
-uid: "css-container-queries"
-title: "CSS Container Queries"
-category: "CSS"
+uid: 'css-container-queries'
+title: 'CSS Container Queries'
+category: 'CSS'
 draft: false
 tags:
   - css
@@ -76,13 +76,13 @@ The way we can achieve this is by using container queries. We would write the ba
 if the container size is 300 px (inside a dropdown) then apply a separate block of CSS, if the container size is 600px (inside a modal) then apply another block of CSS.
 
 ```css
-@container (min-width: 600px){
+@container (min-width: 600px) {
   .accordian {
     /* styles for when container size is at least 600px */
   }
 }
 
-@container (max-width: 300px){
+@container (max-width: 300px) {
   .accordian {
     /* styles for when container size is less than 300px */
   }

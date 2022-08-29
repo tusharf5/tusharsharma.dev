@@ -1,14 +1,14 @@
 ---
-uid: "golang-packages-modules-part-one"
-title: "Golang Modules And Packages"
-category: "Golang"
+uid: 'golang-packages-modules-part-one'
+title: 'Golang Modules And Packages'
+category: 'Golang'
 draft: false
 tags:
   - golang
   - go
   - golang packages
   - golang modules
-excerpt: "A quick introduction to using modules and packages in golang."
+excerpt: 'A quick introduction to using modules and packages in golang.'
 ---
 
 I am learning Golang for the past few months whenever I get some free time. The excitement of exploring a whole new world of

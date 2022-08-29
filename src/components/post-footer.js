@@ -1,55 +1,29 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { classList } from "dynamic-class-list";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import emptyHeart from "../images/heart-empty.svg";
-import fillHeart from "../images/hear-fill.svg";
+import React, { useState, useCallback, useEffect } from 'react';
+import { cl } from 'dynamic-class-list';
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { UUID } from "../utils/constants";
+import emptyHeart from '../images/heart-empty.svg';
+import fillHeart from '../images/hear-fill.svg';
 
-function shareOnFB({ title, url }) {
-  const fullUrl = encodeURI(`https://tusharf5.com${url}`);
-  const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${fullUrl}&t=${title}`;
-  typeof window !== "undefined" &&
-    window.open(
-      fbUrl,
-      "FacebookWindow",
-      "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
-    );
-  return false;
-}
-
-function shareOntwitter({ title, url }) {
-  const fullUrl = encodeURI(`https://tusharf5.com${url}`);
-  const tweetUrl = `https://twitter.com/intent/tweet?url=${fullUrl}&via=tusharf5&text=${title}`;
-  typeof window !== "undefined" &&
-    window.open(
-      tweetUrl,
-      "TwitterWindow",
-      "toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=500,height=500"
-    );
-  return false;
-}
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { UUID } from '../utils/constants';
 
 async function fetchLikesCount() {
   try {
-    const resp = await fetch(
-      "https://tusharsharma-website.firebaseio.com/likes/.json"
-    );
+    const resp = await fetch('https://tusharsharma-website.firebaseio.com/likes/.json');
     const body = await resp.json();
     return body;
   } catch (e) {
-    console.error("fetchLikesCount", e);
+    console.error('fetchLikesCount', e);
     return {};
   }
 }
 
 async function registerLike(postId) {
-  return fetch(
-    `https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(
-      postId
-    )}`
-  );
+  return fetch(`https://obscure-journey-06568.herokuapp.com/?id=${encodeURIComponent(postId)}`);
 }
 
 export default function PostFooter({ title, url, postId }) {
@@ -107,7 +81,7 @@ export default function PostFooter({ title, url, postId }) {
       <div className="social-react">
         <img
           alt="heart like"
-          className={classList({
+          className={cl({
             liked: liked,
             unliked: !liked,
             shakeMe: liked ? false : shake,

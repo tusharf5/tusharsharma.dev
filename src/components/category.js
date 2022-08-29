@@ -29,16 +29,12 @@ export default Category;
 export const query = graphql`
   query singleCategory($category: String) {
     allMdx(
-      filter: {
-        frontmatter: { draft: { ne: true } }
-        fields: { category: { eq: $category } }
-      }
+      filter: { frontmatter: { draft: { ne: true } }, fields: { category: { eq: $category } } }
       sort: { fields: [fields___date], order: DESC }
     ) {
       edges {
         node {
           id
-          timeToRead
           frontmatter {
             title
             excerpt

@@ -1,7 +1,7 @@
 ---
-uid: "type-safe-retry-function-in-typescript"
-title: "Type Safe Retry Function In Typescript"
-category: "Typescript"
+uid: 'type-safe-retry-function-in-typescript'
+title: 'Type Safe Retry Function In Typescript'
+category: 'Typescript'
 draft: false
 tags:
   - typescript
@@ -10,7 +10,7 @@ tags:
   - type safe
   - typescript retry
   - design pattern
-excerpt: "A fully type-safe utility function to retry the function execution on failure."
+excerpt: 'A fully type-safe utility function to retry the function execution on failure.'
 ---
 
 “Everything fails, all the time” - Werner Vogels, Amazon CTO
@@ -65,7 +65,7 @@ export async function retry<T extends (...arg0: any[]) => any>(
   maxTry: number,
   retryCount = 1
 ): Promise<Awaited<ReturnType<T>>> {
-  const currRetry = typeof retryCount === "number" ? retryCount : 1;
+  const currRetry = typeof retryCount === 'number' ? retryCount : 1;
   try {
     const result = await fn(...args);
     return result;
@@ -86,16 +86,12 @@ This is how one would use this function.
 /*
  * Function to retry
  */
-async function callAPI(
-  arg1: string,
-  arg2: number,
-  arg3: { id: string }
-): Promise<{ data: Array<string> }> {
-  return { data: ["array", "of", "strings"] };
+async function callAPI(arg1: string, arg2: number, arg3: { id: string }): Promise<{ data: Array<string> }> {
+  return { data: ['array', 'of', 'strings'] };
 }
 
 // This will call the above function at most 5 times if it fails continuously.
-const result = await retry(callAPI, ["hello", 2, { id: "world" }], 5);
+const result = await retry(callAPI, ['hello', 2, { id: 'world' }], 5);
 ```
 
 The nice thing is that it preserves all the types (parameter and return type) of the function being called which means that it gives you autocompletion and complains if you are not passing in the right parameters.
@@ -135,7 +131,7 @@ This is similar to something like below where typescript is extracting the type 
 
 ```tsx
 function hello() {
-  return "world";
+  return 'world';
 }
 
 type T = typeof hello;
@@ -149,15 +145,15 @@ Alright, back to our function.
 (fn: T, args: Parameters<T>)
 ```
 
-So, Typescript will be aware of the type of our `fn` parameter stored in the `type` variable **T**. The second parameter is `args: Parameters<T>` where we are using a TS utility type called `Parameters<T>` What this does is it extracts the parameters type of a function. Read more about it [here](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype).
+So, Typescript will be aware of the type of our `fn` parameter stored in the `type` variable **T**. The second parameter is `args: Parameters\<T>` where we are using a TS utility type called `Parameters\<T>` What this does is it extracts the parameters type of a function. Read more about it [here](https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype).
 
-Now since we’ve assigned our T type variable to the first parameter (which is a function), `args: Parameters<T>` basically means whatever the `Parameters` type of the first parameter is, assign that type to this second parameter.
+Now since we’ve assigned our T type variable to the first parameter (which is a function), `args: Parameters\<T>` basically means whatever the `Parameters` type of the first parameter is, assign that type to this second parameter.
 
 The below example would make it more clear.
 
 ```tsx
 function hello(a: number, b: string): string {
-  return "world";
+  return 'world';
 }
 
 type T = typeof hello;
@@ -170,16 +166,16 @@ type Params = Parameters<T>;
 In a similar way, we define the return type of our retry function.
 
 ```tsx
-Promise<Awaited<ReturnType<T>>>
+Promise<Awaited<ReturnType<T>>>;
 ```
 
-Let’s focus on the `ReturnType<T>` , This is again one of the utility types provided by Typescript. Read about it [here](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype).
+Let’s focus on the `ReturnType\<T>` , This is again one of the utility types provided by Typescript. Read about it [here](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype).
 
 Similar to the `Parameters` utility type, the `ReturnType` extracts the return type from a function type.
 
 ```tsx
 function hello(a: number, b: string): string {
-  return "world";
+  return 'world';
 }
 
 type T = typeof hello;
@@ -191,7 +187,7 @@ type Return = ReturnType<T>;
 
 ![Type Safe Retry Function In Typescript](./Screenshot_2022-03-06_at_11.29.07_PM.png)
 
-Now since we’ve assigned our T type variable to the first parameter (which is a function), `ReturnType<T>` basically means whatever the `ReturnType` type of the first parameter is, assign that type to the return type of this function.
+Now since we’ve assigned our T type variable to the first parameter (which is a function), `ReturnType\<T>` basically means whatever the `ReturnType` type of the first parameter is, assign that type to the return type of this function.
 
 Finally the `Awaited` Type. The [Awaited](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-5.html#the-awaited-type-and-promise-improvements) type takes in a `Promise` like Type and returns the type of the final resolved value.
 

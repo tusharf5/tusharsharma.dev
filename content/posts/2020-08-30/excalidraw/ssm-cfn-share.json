@@ -24,9 +24,7 @@
       "version": 98,
       "versionNonce": 190693213,
       "isDeleted": false,
-      "boundElementIds": [
-        "5ciM81Ce6t5NAKQPtkmgc"
-      ]
+      "boundElementIds": ["5ciM81Ce6t5NAKQPtkmgc"]
     },
     {
       "id": "3NvBvYH7wD3zSKABMue9v",
@@ -49,10 +47,7 @@
       "version": 154,
       "versionNonce": 821812573,
       "isDeleted": false,
-      "boundElementIds": [
-        "nUsg3-iqgsQdW6xqwJE5J",
-        "hYbcD_hyPR5r5jPaCXiNS"
-      ]
+      "boundElementIds": ["nUsg3-iqgsQdW6xqwJE5J", "hYbcD_hyPR5r5jPaCXiNS"]
     },
     {
       "id": "6VNdwVFvhbpOXV6q5BsnE",
@@ -75,11 +70,7 @@
       "version": 196,
       "versionNonce": 1177010643,
       "isDeleted": false,
-      "boundElementIds": [
-        "X9AA42gc1OCzhNZf2BNEk",
-        "GzwwA1ftTzmTj6lvKsLoy",
-        "i1yC5o3AoM_i7tcK4OMUh"
-      ]
+      "boundElementIds": ["X9AA42gc1OCzhNZf2BNEk", "GzwwA1ftTzmTj6lvKsLoy", "i1yC5o3AoM_i7tcK4OMUh"]
     },
     {
       "id": "5sAn3q1LSla0rJK5N2LGZ",
@@ -102,9 +93,7 @@
       "version": 269,
       "versionNonce": 1414927443,
       "isDeleted": false,
-      "boundElementIds": [
-        "tS9q5kxHHC-hWOlUhknQq"
-      ]
+      "boundElementIds": ["tS9q5kxHHC-hWOlUhknQq"]
     },
     {
       "id": "M9BsA4c_0j7uUVcVwcv8U",
@@ -305,19 +294,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          77.828125,
-          -124.7421875
-        ]
+        [0, 0],
+        [77.828125, -124.7421875]
       ],
-      "lastCommittedPoint": [
-        77.828125,
-        -124.7421875
-      ],
+      "lastCommittedPoint": [77.828125, -124.7421875],
       "startBinding": {
         "elementId": "k2WDxB33_Vi6_VHUlgLNf",
         "focus": -0.6858887367390564,
@@ -410,19 +390,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          -13.62109375,
-          120.71484375
-        ]
+        [0, 0],
+        [-13.62109375, 120.71484375]
       ],
-      "lastCommittedPoint": [
-        -13.62109375,
-        120.71484375
-      ],
+      "lastCommittedPoint": [-13.62109375, 120.71484375],
       "startBinding": {
         "elementId": "--qr5qdsPXFTbLsY6kN2t",
         "focus": 0.2910763210990546,
@@ -457,19 +428,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          50.88671875,
-          122.23046875
-        ]
+        [0, 0],
+        [50.88671875, 122.23046875]
       ],
-      "lastCommittedPoint": [
-        50.88671875,
-        122.23046875
-      ],
+      "lastCommittedPoint": [50.88671875, 122.23046875],
       "startBinding": {
         "elementId": "--qr5qdsPXFTbLsY6kN2t",
         "focus": 0.09219081210549188,
@@ -504,19 +466,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          81.59765625,
-          123.5390625
-        ]
+        [0, 0],
+        [81.59765625, 123.5390625]
       ],
-      "lastCommittedPoint": [
-        81.59765625,
-        123.5390625
-      ],
+      "lastCommittedPoint": [81.59765625, 123.5390625],
       "startBinding": {
         "elementId": "--qr5qdsPXFTbLsY6kN2t",
         "focus": -0.4915265776738692,
@@ -551,19 +504,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          31.3671875,
-          -131.61328125
-        ]
+        [0, 0],
+        [31.3671875, -131.61328125]
       ],
-      "lastCommittedPoint": [
-        31.3671875,
-        -131.61328125
-      ],
+      "lastCommittedPoint": [31.3671875, -131.61328125],
       "startBinding": {
         "elementId": "3NvBvYH7wD3zSKABMue9v",
         "focus": -1.0063058681944868,
@@ -598,19 +542,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          -52.12109375,
-          -129.76171875
-        ]
+        [0, 0],
+        [-52.12109375, -129.76171875]
       ],
-      "lastCommittedPoint": [
-        -52.12109375,
-        -129.76171875
-      ],
+      "lastCommittedPoint": [-52.12109375, -129.76171875],
       "startBinding": {
         "elementId": "6VNdwVFvhbpOXV6q5BsnE",
         "focus": 0.818610434378624,
@@ -645,19 +580,10 @@
       "isDeleted": false,
       "boundElementIds": null,
       "points": [
-        [
-          0,
-          0
-        ],
-        [
-          -9.73828125,
-          -127.86328125
-        ]
+        [0, 0],
+        [-9.73828125, -127.86328125]
       ],
-      "lastCommittedPoint": [
-        -9.73828125,
-        -127.86328125
-      ],
+      "lastCommittedPoint": [-9.73828125, -127.86328125],
       "startBinding": {
         "elementId": "6VNdwVFvhbpOXV6q5BsnE",
         "focus": 0.6566183498921563,

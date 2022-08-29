@@ -193,8 +193,8 @@ function createMDNode({ id, node, content }) {
     internal: {
       content: content,
       // setting a unique name for our new node
-      type: 'Md'
-    }
+      type: 'Md',
+    },
   };
 
   mdNode.html = html;
@@ -210,7 +210,7 @@ exports.onCreateNode = async (
     loadNodeContent,
     actions,
     createNodeId, //helper function to create a unique node id
-    getNode // helper function to get any node by passing the id
+    getNode, // helper function to get any node by passing the id
   },
   pluginOptions
 ) => {
@@ -232,7 +232,7 @@ exports.onCreateNode = async (
   const mdNode = createMDNode({
     id: createNodeId(),
     node,
-    content
+    content,
   });
 
   // registering our new node with getsby
@@ -249,7 +249,7 @@ exports.onCreateNode = async (
   createNodeField({
     name: 'slug', // field name
     mdNode, // the node on which we want to add a custom field
-    value: kebabCase(node.fileName) // field value
+    value: kebabCase(node.fileName), // field value
   });
 };
 ```
@@ -344,7 +344,7 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         `
-      ).then(result => {
+      ).then((result) => {
         // this is some boilerlate to handle errors
         if (result.errors) {
           console.error(result.errors);
@@ -364,8 +364,8 @@ exports.createPages = ({ graphql, actions }) => {
             component: path.resolve(__dirname, `src/components/post.js`),
             // any data you want to pass to the react component that will render this
             context: {
-              id: node.id
-            }
+              id: node.id,
+            },
           });
         });
       })

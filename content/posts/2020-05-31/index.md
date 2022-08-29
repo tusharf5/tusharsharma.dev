@@ -34,9 +34,9 @@ I want to write a few good practices that me and my team follows while working w
 Resources:
   APIDockerRepository:
     Type: AWS::ECR::Repository
-    Properties: 
-      RepositoryName: "api-repository"
-      SomeOtherAttribute: "value"
+    Properties:
+      RepositoryName: 'api-repository'
+      SomeOtherAttribute: 'value'
 ```
 
 Let's say to perform an update on this **ECR Repository** CFN needs to replace it and create a new one in its place. In the above case, CFN won't be able to do that since the `RepositoryName` has a static value. Why? To understand that you need to know how CFN updates resources.
@@ -47,7 +47,7 @@ In the case when it can just update the existing resource, it will do that and r
 
 Now in the case when it cannot update the existing resource and it needs to create a new one. CFN will create a new resource and replace the existing one with the new one. It will remember the previous resource and its state just in case it needs to perform a Rollback. In the case of a **Rollback**, it will delete the newly created resource and bring back the one that was deleted (**in most of the cases**).
 
-Now here's the thing, to replace the ECR repository with a new one, CFN will try to create a new repository with the same attributes and one of the attributes is `RepositoryName` which has a static value of *api-repository*. Now, if you've worked with ECR, you might know that you cannot have two repositories with the same name. So when CFN tries to create a new ECR repository, it fails as ECR throws an error *"Repository already existed"*.
+Now here's the thing, to replace the ECR repository with a new one, CFN will try to create a new repository with the same attributes and one of the attributes is `RepositoryName` which has a static value of _api-repository_. Now, if you've worked with ECR, you might know that you cannot have two repositories with the same name. So when CFN tries to create a new ECR repository, it fails as ECR throws an error _"Repository already existed"_.
 
 There are workarounds to this problem (delete first, create after) but a better solution (if it fits your requirements) is to omit the name attribute at all. By doing that, you leave the responsibility of naming your resources on CFN. CFN will give a pseudo-random name to your resource when it creates it.
 
@@ -56,7 +56,7 @@ Resources:
   APIDockerRepository:
     Type: AWS::ECR::Repository
     Properties:
-      SomeOtherAttribute: "value"
+      SomeOtherAttribute: 'value'
 ```
 
 Now, the next time CFN needs to replace it, it can create a new resource with a new random name and replace it with the existing one. You don't have to break a sweat when updating resources 😇
@@ -167,7 +167,6 @@ Resources:
     Properties:
       AccessControl: Private
       BucketName: !FindInMap [RegionBased, !Ref UserRegion, userImageBucket]
-
 ```
 
 ### Conditions
@@ -191,8 +190,7 @@ Resources:
     Type: AWS::CloudTrail::Trail
     Condition: CreateProdResources
     Properties:
-      S3BucketName: "cloud-trail"
-
+      S3BucketName: 'cloud-trail'
 ```
 
 This way if you deploy this template in `stage` environment **Cloudtrail** will not be created.
@@ -201,7 +199,7 @@ This way if you deploy this template in `stage` environment **Cloudtrail** will 
 
 A lot of times you will have multiple stacks that powers your project's infrastructure. In a lot of those scenarios, you might want to use a resource across multiple stacks. For example, you could have a **Network** stack that manages your **VPC**s and you will need to refer to VPCs defined in that stack when creating resources in other stacks. In such cases, it is not the right approach to copy-paste values from one stack and hardcode them in another stack. Instead, it's advisable to use cross-stack references using **Export** and **Import**.
 
-The following stack exports values of 2 resources that it creates. The first one is the ID of a VPC exported by the name `!Sub ${AWS::StackName}-VPCId` where `{AWS::StackName}` is the unique name of that stack. It's a good practice to **prefix your exported
+The following stack exports values of 2 resources that it creates. The first one is the ID of a VPC exported by the name `!Sub $\{AWS::StackName}-VPCId` where `\{AWS::StackName}` is the unique name of that stack. It's a good practice to **prefix your exported
 values with the Stack id/name** to avoid name collisions. The second exported value is the Subnet Id of a public subnet.
 
 ```yaml
@@ -232,7 +230,6 @@ Parameters:
     Default: VPC-Stack
 
 Resources:
-  
   SecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:

@@ -3,7 +3,7 @@ const kebabCase = require('lodash.kebabcase');
 const { createFilePath } = require('gatsby-source-filesystem');
 
 // thanks to https://gist.github.com/jzazove/1479763
-const urlify = function(a) {
+const urlify = function (a) {
   return a
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -13,7 +13,7 @@ const urlify = function(a) {
 
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    node: { fs: 'empty' }
+    node: { fs: 'empty' },
   });
 };
 // called for each node that has been created
@@ -37,7 +37,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const dirName = createFilePath({
       node,
       getNode,
-      trailingSlash: false
+      trailingSlash: false,
     }); // this will have a starting '/' slash
     // dirName is name of the blog directory i.e 2019-02-09
 
@@ -48,22 +48,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: 'slug',
       node,
-      value: `/posts/${slug}`
+      value: `/posts/${slug}`,
     });
     createNodeField({
       name: 'date',
       node,
-      value: date
+      value: date,
     });
     createNodeField({
       name: 'category',
       node,
-      value: node.frontmatter.category.toLowerCase()
+      value: node.frontmatter.category.toLowerCase(),
     });
     createNodeField({
       name: 'tags',
       node,
-      value: node.frontmatter.tags.map(tag => tag.toLowerCase())
+      value: node.frontmatter.tags.map((tag) => tag.toLowerCase()),
     });
   }
 };
@@ -81,6 +81,7 @@ exports.createPages = ({ graphql, actions }) => {
               edges {
                 node {
                   id
+                  body
                   frontmatter {
                     category
                     title
@@ -91,12 +92,15 @@ exports.createPages = ({ graphql, actions }) => {
                     slug
                     date
                   }
+                  internal {
+                    contentFilePath
+                  }
                 }
               }
             }
           }
         `
-      ).then(result => {
+      ).then((result) => {
         // this is some boilerlate to handle errors
         if (result.errors) {
           console.error(result.errors);
@@ -113,7 +117,7 @@ exports.createPages = ({ graphql, actions }) => {
         // all the posts except draft = true
         const posts = result.data.allMdx.edges
           .filter(({ node }) => !node.frontmatter.draft)
-          .sort(function(a, b) {
+          .sort(function (a, b) {
             return new Date(a.node.fields.date) - new Date(b.node.fields.date);
           });
 
@@ -124,7 +128,7 @@ exports.createPages = ({ graphql, actions }) => {
           } else {
             categories[category] = 1;
           }
-          node.frontmatter.tags.forEach(tag => {
+          node.frontmatter.tags.forEach((tag) => {
             const tagValue = tag.toLowerCase();
             if (tags[tagValue]) {
               tags[tagValue] = tags[tagValue] + 1;
@@ -136,24 +140,27 @@ exports.createPages = ({ graphql, actions }) => {
           const next = posts[index + 1]
             ? {
                 path: posts[index + 1].node.fields.slug,
-                title: posts[index + 1].node.frontmatter.title
+                title: posts[index + 1].node.frontmatter.title,
               }
             : null;
           const prev = posts[index - 1]
             ? {
                 path: posts[index - 1].node.fields.slug,
-                title: posts[index - 1].node.frontmatter.title
+                title: posts[index - 1].node.frontmatter.title,
               }
             : null;
+
           // create a page for this node/post
           createPage({
             path: node.fields.slug,
-            component: path.resolve(__dirname, `src/components/post.js`),
+            component: `${path.resolve(__dirname, `src/components/post.js`)}?__contentFilePath=${
+              node.internal.contentFilePath
+            }`,
             context: {
               id: node.id,
               next,
-              prev
-            }
+              prev,
+            },
           });
         });
 
@@ -161,41 +168,38 @@ exports.createPages = ({ graphql, actions }) => {
         createPage({
           path: '/posts',
           component: path.resolve(__dirname, `src/components/blog.js`),
-          context: {}
+          context: {},
         });
 
         // create a page for all the tags
         createPage({
           path: '/tags',
           component: path.resolve(__dirname, `src/components/all-tags.js`),
-          context: { tags }
+          context: { tags },
         });
 
         // create a page for all the categories
         createPage({
           path: '/categories',
-          component: path.resolve(
-            __dirname,
-            `src/components/all-categories.js`
-          ),
-          context: { categories }
+          component: path.resolve(__dirname, `src/components/all-categories.js`),
+          context: { categories },
         });
 
         // create a page for each tag
-        Object.keys(tags).forEach(tag => {
+        Object.keys(tags).forEach((tag) => {
           createPage({
             path: '/tags/' + tag,
             component: path.resolve(__dirname, `src/components/tag.js`),
-            context: { tag }
+            context: { tag },
           });
         });
 
         // create a page for each category
-        Object.keys(categories).forEach(category => {
+        Object.keys(categories).forEach((category) => {
           createPage({
             path: '/categories/' + category,
             component: path.resolve(__dirname, `src/components/category.js`),
-            context: { category }
+            context: { category },
           });
         });
       })

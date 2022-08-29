@@ -17,7 +17,7 @@ This is one of the major differences between promises and observables. Observabl
 
 ```js
 console.log('Start');
-const fetchItem = new Promise(resolve => {
+const fetchItem = new Promise((resolve) => {
   console.log('Inside Promise');
   resolve();
 });
@@ -35,7 +35,7 @@ This works because the javascript Interpreter does not go through a function dec
 ```js
 console.log('Start');
 function runPromise() {
-  const fetchItem = new Promise(resolve => {
+  const fetchItem = new Promise((resolve) => {
     console.log('Inside Promise');
     resolve();
   });

@@ -1,7 +1,7 @@
 ---
-uid: "kadane-algorithm-maximum-subarray"
+uid: 'kadane-algorithm-maximum-subarray'
 title: "Understanding Kadane's Algorithm"
-category: "CS"
+category: 'CS'
 draft: false
 tags:
   - maximum-subarray
@@ -121,7 +121,7 @@ func max_subarray_sum(array []int) float64 {
   // we add new element to the current last element
   temp_sum := sum_that_ends_at_last_elem + int(array[i])
 
-  // if it is greater than zero we add it to the sum_that_ends_at_last_elem 
+  // if it is greater than zero we add it to the sum_that_ends_at_last_elem
   if temp_sum >= 0 {
    sum_that_ends_at_last_elem = temp_sum
   } else {

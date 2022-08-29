@@ -18,10 +18,10 @@ array to modify as well as filter the array elements.
 ```js
 const array = ['good a', 'evil b', 'nice c', 'amazing d', 'bad e'];
 const resultArray = array
-  .filter(e => !(e.includes('bad') || e.includes('evil')))
+  .filter((e) => !(e.includes('bad') || e.includes('evil')))
   .map((e, i) => `${i} - ${e}, `)
   .join(' ');
-render(<div className='react-live-test'>{resultArray}</div>);
+render(<div className="react-live-test">{resultArray}</div>);
 ```
 
 ## Using the latest array.flatmap 💁🏻‍♂️
@@ -43,5 +43,5 @@ const resultArray = array.flatMap((e, i) => {
   // flattening an empty array will result in nothing so it will skip it
   return [];
 });
-render(<div className='react-live-test'>{resultArray}</div>);
+render(<div className="react-live-test">{resultArray}</div>);
 ```

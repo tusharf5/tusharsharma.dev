@@ -31,9 +31,7 @@ let frameworks = ['express', 'node', 'sails', 'hapi'];
 // this is not an efficient implementation but should work
 // fine for an array with a few hundred items
 function toggleSingleItem(array, item) {
-  return array.includes(item)
-    ? array.filter(frmwrk => frmwrk !== item)
-    : array.concat(item);
+  return array.includes(item) ? array.filter((frmwrk) => frmwrk !== item) : array.concat(item);
 }
 
 // prints out - ['node', 'sails', 'hapi'];
@@ -51,14 +49,12 @@ Things get tricky when we want to toggle an array of items from an array of item
 let frameworks = ['express', 'node', 'sails', 'hapi'];
 
 function toggleSingleItem(array, item) {
-  return array.includes(item)
-    ? array.filter(frmwrk => frmwrk !== item)
-    : array.concat(item);
+  return array.includes(item) ? array.filter((frmwrk) => frmwrk !== item) : array.concat(item);
 }
 
 function toggle(array, items) {
   let arrayClone = [...array];
-  items.forEach(item => {
+  items.forEach((item) => {
     arrayClone = toggleSingleItem(arrayClone, item);
   });
   return arrayClone;
@@ -103,7 +99,7 @@ console.log(frameworks);
 
 That's cool right! No need to write your own implementation.
 
-Now I know most of the times our array elements are not string or number literls they are `{}` Objects.
+Now I know most of the times our array elements are not string or number literls they are `\{}` Objects.
 If we want to toggle objects there is another method for that which takes a function which tells it how
 to determine if an element should be deleted or not.
 
@@ -111,11 +107,11 @@ to determine if an element should be deleted or not.
 let frameworks = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
 // prints out - [{"id":2},{"id":3},{"id":4}]
-frameworks = _.xorBy(frameworks, [{ id: 1 }], item => item.id);
+frameworks = _.xorBy(frameworks, [{ id: 1 }], (item) => item.id);
 console.log(frameworks);
 
 // prints out - [{"id":2},{"id":3},{"id":4},{"id":1}]
-frameworks = _.xorBy(frameworks, [{ id: 1 }], item => item.id);
+frameworks = _.xorBy(frameworks, [{ id: 1 }], (item) => item.id);
 console.log(frameworks);
 ```
 

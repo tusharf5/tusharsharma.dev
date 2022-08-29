@@ -6,10 +6,10 @@ import DarkModeToggle from './dark-mode-switch';
 
 export default function Header() {
   return (
-    <header className='header'>
+    <header className="header">
       <nav>
-        <Link className='logo' to='/'>
-          <img alt='Tushar Sharma' src={favicon} />
+        <Link className="logo" to="/">
+          <img alt="Tushar Sharma" src={favicon} />
           <span>tusharsharma</span>
         </Link>
         <span></span>

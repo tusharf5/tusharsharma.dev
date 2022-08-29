@@ -38,7 +38,7 @@ us spawn the most common enemy in our game. It has a `life` and `ammo` property 
 function Enemy() {
   this.life = 10;
   this.ammo = 20;
-  this.shoot = function() {
+  this.shoot = function () {
     console.log('Shooting');
     this.ammo--;
   };
@@ -67,7 +67,7 @@ function spawnEnemy() {
   return {
     life: 10,
     ammo: 20,
-    shoot
+    shoot,
   };
 }
 
@@ -87,30 +87,28 @@ So `window.name` will be `"some"` and
 var cat = new Cat();
 ```
 
-**The `new` keyword change the context of `this` inside the `Contructor` function to an `Empty Object {}`**
+**The `new` keyword change the context of `this` inside the `Contructor` function to an `Empty Object \{}`**
 
 The function then returns it.
 
 That is why it is so important.
 
 ```js
-var cat = Object.create(Object.prototype,
-      {
-        name: {
-                value: 'Jimmy',
-                enumerable: true,
-                writable: true,
-                configurable: true
-              }
-      }
-    );
+var cat = Object.create(Object.prototype, {
+  name: {
+    value: 'Jimmy',
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  },
+});
 ```
 
 It is taking an argument which will become the prototype of the new Object and some values and their attributes.
 
 **This is how objects are created by `constructor function` and `object literals`**
 
-_Glad you don't have to do that everytime_
+Glad you don't have to do that everytime
 
 #### Prototypes and Inheritance
 
@@ -130,11 +128,11 @@ Now whenever you make a `new` instance from that contructor function.
 
 ```js
 function Car() {
-  this.name = "mozilla";
+  this.name = 'mozilla';
 }
 ```
 
-**JS created a new Object**
+JS created a new Object.
 
 ```js
 Car {}
@@ -148,7 +146,7 @@ and when you do
 var honda = new Car();
 ```
 
-**JS creates another Object**
+JS creates another Object
 
 ```js
 honda {}
@@ -161,9 +159,9 @@ So the `prototype` of this newly created object is the object that js created fo
 Each property we have in the contructor is copied to the new instance,
 The properties attached to the `prototype` are accessed later.
 
-**A function's protptype is an Object which will become the prototype of all the function using this function as a constructor function**
+A function's protptype is an Object which will become the prototype of all the function using this function as a constructor function
 
-**An object's prototype is an object from which an object is inherited**
+An object's prototype is an object from which an object is inherited
 
 #### Changing a Function's prototype
 
@@ -178,7 +176,7 @@ It makes the `prototype of the parent function` the `prototype of an empty objec
 
 `Object.create` and not `new Parent()` because we dont want to call parent function we just want to assign the prototype of it.
 
-**But we do need to initialize the Parent's contructor function**
+But we do need to initialize the Parent's contructor function
 
 ```js
 function Base() {

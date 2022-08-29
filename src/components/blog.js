@@ -28,14 +28,10 @@ export default Blog;
 
 export const query = graphql`
   query blogPosts {
-    allMdx(
-      filter: { frontmatter: { draft: { ne: true } } }
-      sort: { fields: [fields___date], order: DESC }
-    ) {
+    allMdx(filter: { frontmatter: { draft: { ne: true } } }, sort: { fields: [fields___date], order: DESC }) {
       edges {
         node {
           id
-          timeToRead
           frontmatter {
             title
             excerpt

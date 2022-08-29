@@ -1,7 +1,7 @@
 ---
-uid: "aws-cfn-with-ssm-parameters"
-title: "SSM Parameters For A Better CloudFormation Experience"
-category: "AWS"
+uid: 'aws-cfn-with-ssm-parameters'
+title: 'SSM Parameters For A Better CloudFormation Experience'
+category: 'AWS'
 draft: false
 tags:
   - aws
@@ -11,7 +11,7 @@ tags:
   - system manager
   - cross-stack
   - secrets in aws
-excerpt: "How we use SSM Parameter Store for managing our AWS resources created by CloudFormation."
+excerpt: 'How we use SSM Parameter Store for managing our AWS resources created by CloudFormation.'
 ---
 
 At [Gerald](https://gerald.app), we have a fairly medium-sized AWS infrastructure with workloads that span multiple domains. We're using more than 50 different AWS services. For any change in our AWS account, we use CloudFormation (I'll refer to it as CFN).
@@ -61,8 +61,8 @@ function getSecretFromShellEnvironment(key) {
 
 function loadSecrets() {
   const secrets = {
-    my_s3_bucket: getSecretFromShellEnvironment("/prod/bff_api/my_s3_bucket"),
-    queue_url: getSecretFromShellEnvironment("/prod/bff_api/queue_url"),
+    my_s3_bucket: getSecretFromShellEnvironment('/prod/bff_api/my_s3_bucket'),
+    queue_url: getSecretFromShellEnvironment('/prod/bff_api/queue_url'),
   };
   return secrets;
 }
@@ -98,8 +98,8 @@ async function getSecretFromSSM(key) {
 
 async function loadSecrets() {
   const [my_s3_bucket, queue_url] = await Promise.all([
-    getSecretFromSSM("/prod/bff_api/my_s3_bucket"),
-    getSecretFromSSM("/prod/bff_api/queue_url"),
+    getSecretFromSSM('/prod/bff_api/my_s3_bucket'),
+    getSecretFromSSM('/prod/bff_api/queue_url'),
   ]);
   return { my_s3_bucket, queue_url };
 }
@@ -128,9 +128,9 @@ This quickly became a bottleneck for our fast-paced development team. Every time
 Why restarting the servers? We had to restart the servers because we used to load all the values from the store in one go before starting the server so that while the server was running, it didn't have to download those values again. For the server to pick up new values from the store we would have to restart the server.
 
 ```js {9,10,14,21,29}
-import express from "express";
+import express from 'express';
 
-import { loadConfigFromSSMParams, loadSecretsFromSSMParams } from "./bootstrap";
+import { loadConfigFromSSMParams, loadSecretsFromSSMParams } from './bootstrap';
 
 const app = express();
 const port = 3000;
@@ -140,19 +140,19 @@ const config = await loadConfigFromSSMParams();
 const secrets = await loadSecretsFromSSMParams();
 
 // Register routes
-app.get("/status", (req, res) => {
+app.get('/status', (req, res) => {
   if (config.isLive) {
-    return res.send("Live ✅");
+    return res.send('Live ✅');
   }
-  res.send("Not live yet ❌");
+  res.send('Not live yet ❌');
 });
 
-app.get("/add_to_queue", (req, res) => {
+app.get('/add_to_queue', (req, res) => {
   if (secrets.queue_url) {
     // add item to sqs queue
-    return res.send("Uploaded ✅");
+    return res.send('Uploaded ✅');
   }
-  res.send("Uploading Failed ❌");
+  res.send('Uploading Failed ❌');
 });
 
 // Start the server
@@ -192,7 +192,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # unique ssm param key
-      Name: "/my_app/resources/s3/archive_bucket"
+      Name: '/my_app/resources/s3/archive_bucket'
       Type: String
       # value of the key is the name of the bucket
       # since "!Ref S3Bucket" returns the name of that bucket
@@ -220,7 +220,7 @@ Resources:
       AvailabilityZone:
         Fn::Select:
           - 0
-          - Fn::GetAZs: { Ref: "AWS::Region" }
+          - Fn::GetAZs: { Ref: 'AWS::Region' }
       CidrBlock: 10.0.0.0/18
       MapPublicIpOnLaunch: true
 
@@ -232,7 +232,7 @@ Resources:
       AvailabilityZone:
         Fn::Select:
           - 1
-          - Fn::GetAZs: { Ref: "AWS::Region" }
+          - Fn::GetAZs: { Ref: 'AWS::Region' }
       CidrBlock: 10.0.64.0/18
       MapPublicIpOnLaunch: true
 
@@ -241,7 +241,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # key
-      Name: "/app_network/plain/resources/ec2/vpc_id"
+      Name: '/app_network/plain/resources/ec2/vpc_id'
       Type: String
       # value
       Value: !Ref MainVPC
@@ -251,7 +251,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # key
-      Name: "/app_network/plain/resources/ec2/public_subnet_1_id"
+      Name: '/app_network/plain/resources/ec2/public_subnet_1_id'
       Type: String
       # value
       Value: !Ref PublicSubnetOne
@@ -261,7 +261,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # key
-      Name: "/app_network/plain/resources/ec2/public_subnet_2_id"
+      Name: '/app_network/plain/resources/ec2/public_subnet_2_id'
       Type: String
       # value
       Value: !Ref PublicSubnetTwo
@@ -275,13 +275,9 @@ it doesn't have to download those configs and secrets again and again. If the ap
 To solve this issue we divided the configs & secrets into two groups. The values in the first group can change frequently and the values in the second group would rarely change. The values of the first group will be accessed from the Parameter Store in real-time i.e every time it needs to be accessed it is loaded from the Parameter Store via an API call.
 
 ```js {13,14,17,25}
-import express from "express";
+import express from 'express';
 
-import {
-  loadConfigFromSSMParams,
-  loadSecretsFromSSMParams,
-  getSSMParamValue,
-} from "./bootstrap";
+import { loadConfigFromSSMParams, loadSecretsFromSSMParams, getSSMParamValue } from './bootstrap';
 
 const app = express();
 const port = 3000;
@@ -290,19 +286,19 @@ const port = 3000;
 const config = await loadConfigFromSSMParams();
 const secrets = await loadSecretsFromSSMParams();
 
-app.get("/status", (req, res) => {
+app.get('/status', (req, res) => {
   if (config.isLive) {
-    return res.send("Live ✅");
+    return res.send('Live ✅');
   }
-  res.send("Not live yet ❌");
+  res.send('Not live yet ❌');
 });
 
-app.get("/add_to_queue", async (req, res) => {
+app.get('/add_to_queue', async (req, res) => {
   // loading latest value from the store in real time
-  const queueUrl = await getSSMParamValue("my_queue");
+  const queueUrl = await getSSMParamValue('my_queue');
   // add item to sqs queue queueUrl
-  return res.send("Uploaded ✅");
-  res.send("Uploading Failed ❌");
+  return res.send('Uploaded ✅');
+  res.send('Uploading Failed ❌');
 });
 
 app.listen(port, () => {
@@ -324,13 +320,13 @@ This was fairly easy as we were already using a shared npm package across multip
 export const ssmKeys = {
   my_app: {
     vpc: {
-      vpc_id: "my_app/vpc/vpc_id",
+      vpc_id: 'my_app/vpc/vpc_id',
     },
     s3: {
-      archive_bucket: "my_app/s3/archive_bucket",
+      archive_bucket: 'my_app/s3/archive_bucket',
     },
     sqs: {
-      temp_item_queue_url: "my_app/sqs/temp_item_queue_url",
+      temp_item_queue_url: 'my_app/sqs/temp_item_queue_url',
     },
   },
 };
@@ -340,13 +336,13 @@ Then we can use it in our applications as shown below.
 
 ```js {5}
 // script.js
-import { ssmKeys } from "@org/shared-package";
+import { ssmKeys } from '@org/shared-package';
 
-app.get("/add_to_s3", async (req, res) => {
+app.get('/add_to_s3', async (req, res) => {
   const bucket = await getSSMParam(ssmKeys.my_app.s3.archive_bucket);
   // add item to s3
-  return res.send("Uploaded ✅");
-  res.send("Uploading Failed ❌");
+  return res.send('Uploaded ✅');
+  res.send('Uploading Failed ❌');
 });
 ```
 
@@ -367,7 +363,7 @@ Resources:
     Properties:
       Description: DO NOT UPDATE. Updated from CFN
       # unique ssm param key
-      Name: "my_app/s3/archive_bucket"
+      Name: 'my_app/s3/archive_bucket'
       Type: String
       # value of the key is the name of the bucket
       # since "!Ref S3Bucket" returns the name of that bucket
@@ -382,7 +378,7 @@ Another benefit that we found out later is that you can also use SSM Parameter S
 ![SSM Parameter Store](./ssm-cfn-share-res.png)
 
 ```yaml {10,11,21}
-## Importing resources created in other stacks 
+## Importing resources created in other stacks
 ## using their SSM Parameter Keys
 Parameters:
   MyEmptyBucket:
@@ -391,12 +387,12 @@ Parameters:
     Description: The archive bucket created by the storage stack
   MainVPC:
     Description: VpcId of the Network Stack
-    Type: "AWS::SSM::Parameter::Value<String>"
-    Default: "/app_network/plain/resources/ec2/vpc_id"
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/app_network/plain/resources/ec2/vpc_id'
   PublicSubnetOne:
     Description: Public Subnet One of the Network Stack
-    Type: "AWS::SSM::Parameter::Value<String>"
-    Default: "/app_network/plain/resources/ec2/public_subnet_1_id"
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: '/app_network/plain/resources/ec2/public_subnet_1_id'
 
 Resources:
   MyEC2SecurityGroup:

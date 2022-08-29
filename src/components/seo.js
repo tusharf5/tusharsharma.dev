@@ -1,24 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { StaticQuery, graphql } from "gatsby";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
 
 function SEO({ description, lang, meta, keywords = [], title, scripts = [] }) {
   return (
     <StaticQuery
       query={detailsQuery}
       render={(data) => {
-        const metaDescription =
-          description || data.site.siteMetadata.description;
+        const metaDescription = description || data.site.siteMetadata.description;
         const allKeywords = keywords.concat(data.site.siteMetadata.keywords);
         return (
           <Helmet
             htmlAttributes={{
               lang,
             }}
-            title={`${title ? title + " | " : ""}${
-              data.site.siteMetadata.title
-            }`}
+            title={`${title ? title + ' | ' : ''}${data.site.siteMetadata.title}`}
             meta={[
               {
                 name: `description`,
@@ -63,18 +60,11 @@ function SEO({ description, lang, meta, keywords = [], title, scripts = [] }) {
               )
               .concat(meta)}
           >
-            {process.env.NODE_ENV === "production" && (
-              <script
-                async
-                src="https://www.googletagmanager.com/gtag/js?id=UA-124607330-1"
-              />
+            {process.env.NODE_ENV === 'production' && (
+              <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124607330-1" />
             )}
-            {scripts.length > 0
-              ? scripts.forEach((url) => (
-                  <script async src={url} charset="utf-8"></script>
-                ))
-              : null}
-            {process.env.NODE_ENV === "production" && (
+            {scripts.length > 0 ? scripts.forEach((url) => <script async src={url} charset="utf-8"></script>) : null}
+            {process.env.NODE_ENV === 'production' && (
               <script>
                 {`
               window.dataLayer = window.dataLayer || [];

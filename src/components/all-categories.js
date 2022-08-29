@@ -11,7 +11,7 @@ const AllCategories = ({ pageContext: { categories } }) => {
       </header>
       <main>
         <ul>
-          {Object.keys(categories).map(category => (
+          {Object.keys(categories).map((category) => (
             <li key={category}>
               <Link to={`/categories/${category}`}>
                 {category} <span>({categories[category]})</span>

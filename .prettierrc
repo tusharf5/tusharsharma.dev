@@ -1,1 +1,12 @@
-{}
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "printWidth": 125,
+  "useTabs": false,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2,
+  "htmlWhitespaceSensitivity": "css"
+}

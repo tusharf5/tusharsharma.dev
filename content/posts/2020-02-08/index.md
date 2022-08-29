@@ -173,9 +173,7 @@ Let's say you have a **primary rounded button** on your navigation bar which req
     <nav class="app-nav">
       <ul>
         <li>
-          <button class="primary rounded">
-            Login
-          </button>
+          <button class="primary rounded">Login</button>
         </li>
       </ul>
     </nav>

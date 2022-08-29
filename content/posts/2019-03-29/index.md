@@ -31,37 +31,37 @@ represents a user with some basic information like `country`, `name`, `isGuest`,
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2002',
         name: 'Marshall',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'france'
+        country: 'france',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1233'),
@@ -73,37 +73,37 @@ represents a user with some basic information like `country`, `name`, `isGuest`,
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2006',
         name: 'Peter',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1234'),
@@ -115,37 +115,37 @@ represents a user with some basic information like `country`, `name`, `isGuest`,
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1235'),
@@ -157,17 +157,17 @@ represents a user with some basic information like `country`, `name`, `isGuest`,
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
-      }
-    ]
-  }
+        country: 'usa',
+      },
+    ],
+  },
 ];
 ```
 
@@ -202,37 +202,37 @@ This will be the returned result.
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2006',
         name: 'Peter',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1234'),
@@ -244,37 +244,37 @@ This will be the returned result.
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1235'),
@@ -286,17 +286,17 @@ This will be the returned result.
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
-      }
-    ]
-  }
+        country: 'usa',
+      },
+    ],
+  },
 ];
 ```
 
@@ -333,37 +333,37 @@ This is the result of the above query.
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2002',
         name: 'Marshall',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'france'
+        country: 'france',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1233'),
@@ -375,37 +375,37 @@ This is the result of the above query.
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2006',
         name: 'Peter',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1234'),
@@ -417,38 +417,38 @@ This is the result of the above query.
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
-  }
+        country: 'germany',
+      },
+    ],
+  },
 ];
 ```
 
@@ -489,37 +489,37 @@ The result from the above query is.
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2002',
         name: 'Marshall',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'france'
+        country: 'france',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1234'),
@@ -531,38 +531,38 @@ The result from the above query is.
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
-  }
+        country: 'germany',
+      },
+    ],
+  },
 ];
 ```
 
@@ -658,7 +658,7 @@ db.posts.updateMany(
 
 Now _all the comments_ on the _post with id '1234'_ will have a `version: 'v1'` property.
 
-> \$[] works correctly only with **updateMany** method or **{multi: true}** option as it
+> \$[] works correctly only with **updateMany** method or **\{multi: true}** option as it
 > tends to update more than one element.
 
 _Things get a little trickier from here._
@@ -676,7 +676,7 @@ db.posts.update(
 );
 ```
 
-> **{ multi: true }** applies the action on all of the matched documents. You can also use **updateMany** method instead.
+> **\{ multi: true }** applies the action on all of the matched documents. You can also use **updateMany** method instead.
 
 This command looks pretty good. Update the **isGuest** field to false in all the comments where name is John.
 
@@ -696,37 +696,37 @@ The `isGuest` field of all the _highlighted_ lines in the document below was set
         name: 'Adam',
         text: 'Nice!',
         isGuest: true,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2002',
         name: 'Marshall',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'I like it!',
         isGuest: true,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2003',
         name: 'Joe',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'france'
+        country: 'france',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: true,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1233'),
@@ -738,37 +738,37 @@ The `isGuest` field of all the _highlighted_ lines in the document below was set
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2006',
         name: 'Peter',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: false,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1234'),
@@ -780,37 +780,37 @@ The `isGuest` field of all the _highlighted_ lines in the document below was set
         name: 'Adam',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2007',
         name: 'Tushar',
         text: 'I like it!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2008',
         name: 'Sunil',
         text: 'Learned a lot!',
         isGuest: false,
-        country: 'india'
+        country: 'india',
       },
       {
         id: '2004',
         name: 'Taylor',
         text: 'Awesome Post!',
         isGuest: false,
-        country: 'germany'
-      }
-    ]
+        country: 'germany',
+      },
+    ],
   },
   {
     _id: ObjectId('1235'),
@@ -822,17 +822,17 @@ The `isGuest` field of all the _highlighted_ lines in the document below was set
         name: 'John',
         text: 'Nice!',
         isGuest: false,
-        country: 'usa'
+        country: 'usa',
       },
       {
         id: '2005',
         name: 'John',
         text: 'Good!',
         isGuest: false,
-        country: 'usa'
-      }
-    ]
-  }
+        country: 'usa',
+      },
+    ],
+  },
 ];
 ```
 
@@ -887,7 +887,7 @@ It is similar to performing `result.map(e => updateElement(e))` where we are upd
 the query result.
 
 What we need to do is update based on some condition **i.e**
-`result.map(e => { if(e.name === 'John') { return updateElement(e); } else { return e; } })`
+`result.map(e => \{ if(e.name === 'John') \{ return updateElement(e); } else \{ return e; } })`
 
 ### \$[indentifier] operator to the rescue
 
@@ -899,7 +899,7 @@ db.posts.update(
 );
 ```
 
-When updating array elements, MongoDB will check the _{ 'e.name': 'John' }_ condition for each array element and only update the element
+When updating array elements, MongoDB will check the _\{ 'e.name': 'John' }_ condition for each array element and only update the element
 if it is true.
 
 ```shell {2}
@@ -939,25 +939,25 @@ is equal to `John` where _e_ represents the element.
 Let's take an example of a customers collection where we can tag each customer. In a typical dashboard we could expect
 the filter criterias to be like "Show only important", "Show only business", "Show only repeat and important", etc.
 
-```json
+```js
 [
   {
-    "_id": "123456abcd",
-    "tags": ["important", "business", "new"]
+    _id: '123456abcd',
+    tags: ['important', 'business', 'new'],
   },
   {
-    "_id": "123457abce",
-    "tags": ["spam", "new"]
+    _id: '123457abce',
+    tags: ['spam', 'new'],
   },
   {
-    "_id": "123458abcf",
-    "tags": ["important", "repeat", "normal"]
+    _id: '123458abcf',
+    tags: ['important', 'repeat', 'normal'],
   },
   {
-    "_id": "123459abcg",
-    "tags": ["spam", "repeat"]
-  }
-]
+    _id: '123459abcg',
+    tags: ['spam', 'repeat'],
+  },
+];
 ```
 
 ```shell

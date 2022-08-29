@@ -1,14 +1,14 @@
 ---
-uid: "react-hooks-mental-model"
-title: "Re-visiting React Hooks - useEffect"
-category: "REACT"
+uid: 'react-hooks-mental-model'
+title: 'Re-visiting React Hooks - useEffect'
+category: 'REACT'
 draft: false
 tags:
   - react
   - hooks
   - react hooks
   - useEffect
-excerpt: "A little late but writing my thoughts on why React Hooks are great and especially the useEffect Hook."
+excerpt: 'A little late but writing my thoughts on why React Hooks are great and especially the useEffect Hook.'
 ---
 
 With the addition of [Hooks](https://reactjs.org/docs/hooks-intro.html) in React, developers could use a lot of react features that were only available through class components in function components also. React hooks don't directly bring anything new to react. It provides an API to use features like local state, component lifecycle, etc in function components. So why use hooks in function components if you can do pretty much everything using class components? Let's see.
@@ -18,7 +18,7 @@ With the addition of [Hooks](https://reactjs.org/docs/hooks-intro.html) in React
 Class components require more boilerplate than function components. Take a look at this very simple class component.
 
 ```jsx
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export class BaseComponent extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export class BaseComponent extends Component {
 Compare it with the function component below which requires much less code.
 
 ```jsx
-import React from "react";
+import React from 'react';
 
 export function BaseComponent() {
   return <div>Hello</div>;

@@ -1,12 +1,12 @@
 /* eslint-disable */
-import React, { useEffect } from "react";
-import { graphql } from "gatsby";
-import { nanoid } from "nanoid";
+import React, { useEffect } from 'react';
+import { graphql } from 'gatsby';
+import { nanoid } from 'nanoid';
 
-import Layout from "../components/layout";
-import Seo from "../components/seo";
-import PostCard from "../components/post-card";
-import Header from "../components/header";
+import Layout from '../components/layout';
+import Seo from '../components/seo';
+import PostCard from '../components/post-card';
+import Header from '../components/header';
 
 const IndexPage = ({ data }) => {
   const { edges: posts } = data.allMdx;
@@ -32,14 +32,10 @@ export default IndexPage;
 
 export const query = graphql`
   query blogIndex {
-    allMdx(
-      filter: { frontmatter: { draft: { ne: true } } }
-      sort: { fields: [fields___date], order: DESC }
-    ) {
+    allMdx(filter: { frontmatter: { draft: { ne: true } } }, sort: { fields: [fields___date], order: DESC }) {
       edges {
         node {
           id
-          timeToRead
           frontmatter {
             title
             excerpt

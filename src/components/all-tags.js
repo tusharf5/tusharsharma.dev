@@ -11,7 +11,7 @@ const AllTags = ({ pageContext: { tags } }) => {
       </header>
       <main>
         <ul>
-          {Object.keys(tags).map(tag => (
+          {Object.keys(tags).map((tag) => (
             <li key={tag}>
               <Link to={`/tags/${tag}`}>
                 {tag} <span>({tags[tag]})</span>

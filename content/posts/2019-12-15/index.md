@@ -24,7 +24,7 @@ A React application is made up of components in a tree like structure. We often 
 
 ![React Fiber Architecture - A Deep Dive](/images/tree-update.gif)
 
-So when there is an update (`setState({...})`) React would start from the root node and update/build the tree while moving down the component tree i.e a complete traversal of your app's component tree.
+So when there is an update (`setState(\{...})`) React would start from the root node and update/build the tree while moving down the component tree i.e a complete traversal of your app's component tree.
 
 ## Stack Reconciler
 
@@ -101,12 +101,12 @@ To start creating the **workInProgress** tree, React starts to clone the current
 The callbacks we provide to the `setState` call are actually stored in the **updateQueue** and it is during this time that React calls all of those callbacks to compute the updated state of that component.
 
 ```js
-this.setState(state => {
+this.setState((state) => {
   return { ...newState };
 });
 ```
 
-> Prefer using setState functions setState((state) => ({...})) which guarantees you the latest state passed in arguments as opposed to passing the new state as an object to setState. setState({...})
+> Prefer using setState functions setState((state) => (\{...})) which guarantees you the latest state passed in arguments as opposed to passing the new state as an object to setState. setState(\{...})
 
 Once it has the updated props or state, it needs to know the children of that fiber node and to get the children it needs to call the **render** method of that component. Before calling the render method it calls **shouldComponentUpdate** to check if it should actually update the component or not. If there are no updates for a node then React would just reuse the node from the **current** tree without creating a new node. This process is repeated until it reaches a node without any children.
 
