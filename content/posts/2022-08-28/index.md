@@ -2,7 +2,7 @@
 uid: 'for-select-pattern-go'
 title: 'For {} Select Pattern In Go'
 category: 'Go'
-draft: false
+draft: true
 tags:
   - go
   - golang

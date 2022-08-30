@@ -98,7 +98,7 @@
 
     h1:after {
       border-bottom: 2px dashed var(--h1-dash-color);
-      content: "";
+      content: '';
       width: 100px;
       display: block;
       margin: 0.2em auto 0;
@@ -120,7 +120,7 @@
     h3:before {
       border-radius: 50%;
       background-color: var(--sub-head-before);
-      content: "";
+      content: '';
       width: 6px;
       display: inline-block;
       height: 6px;
@@ -135,7 +135,7 @@
 
     h4:before {
       background-color: var(--sub-head-before);
-      content: "";
+      content: '';
       width: 6px;
       display: inline-block;
       height: 2px;
@@ -314,34 +314,52 @@
       margin-bottom: 0;
     }
 
-    pre,
-    code,
-    tt {
+    & > pre,
+    & > code,
+    & > tt {
       font-size: 90%;
       border-radius: 3px;
       font-family: var(--code-font-family);
     }
 
-    code,
-    tt {
+    & > code,
+    & > tt {
       margin: 0 2px;
       padding: 2px 4px;
       background-color: var(--code-bg);
     }
 
-    pre {
+    & > pre {
       font-size: 85%;
+    }
+
+    & > pre.parent-pre {
       background-color: var(--pre-bg);
       margin-bottom: 1.5em;
       margin-top: 1.5em;
-      padding: 12px 1em;
+      padding: 1em;
+      border-radius: 6px;
+    }
+
+    & > pre.parent-pre > pre {
+      padding: 0.6em;
+      border-radius: 6px;
       overflow: auto;
       max-height: 600px;
     }
 
-    pre .highlight-line {
+    & > pre .highlight-line {
       background-color: var(--code-line-highlight);
       display: block;
+      margin-right: -1em;
+      margin-left: -1em;
+      padding-right: 1em;
+      padding-left: 0.75em;
+      border-left: 0.3em solid #f99;
+    }
+
+    & > pre .token-line {
+      white-space: pre-wrap;
     }
 
     img {

@@ -12,13 +12,16 @@ import NoteBox from './short-codes/NoteBox';
 const components = {
   pre: (preProps) => {
     const props = preToCodeBlock(preProps);
-    console.log(preProps);
     // if there's a codeString and some props, we passed the test
     if (props) {
-      return <CodeSnippet {...props} />;
+      return (
+        <pre className="parent-pre">
+          <CodeSnippet {...props} />
+        </pre>
+      );
     }
     // it's possible to have a pre without a code in it
-    return <pre {...preProps} />;
+    return <pre {...preProps} className="parent-pre" />;
   },
   code: CodeSnippet,
   NoteBox: NoteBox,
