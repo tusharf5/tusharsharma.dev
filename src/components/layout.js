@@ -6,6 +6,8 @@ import { nanoid } from 'nanoid';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { UUID } from '../utils/constants';
 
+import '../styles/main.scss';
+
 const Layout = ({ children }) => {
   const [uuid, setUuid] = useLocalStorage(UUID, '');
 
